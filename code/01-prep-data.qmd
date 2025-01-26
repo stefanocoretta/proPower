@@ -1,0 +1,67 @@
+---
+title: "Prepare data"
+author: "Stefano"
+---
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(ggeffects)
+library(simr)
+library(coretta2019eng)
+data("eng_durations")
+```
+
+```{r}
+set.seed(9872)
+eng_s <- eng_durations |>
+  distinct(speaker) |> 
+  slice_sample(n = 6) |> 
+  inner_join(eng_durations, by = "speaker") |> 
+  droplevels()
+unique(eng_s$speaker)
+```
+
+```{r}
+eng_s |> 
+  ggplot(aes(voicing, v1_duration)) +
+  geom_jitter() +
+  facet_grid(cols = vars(num_syl))
+```
+
+```{r}
+dur_lm <- lmer(
+  log(v1_duration) ~ voicing + num_syl + voicing:num_syl + speech_rate_c + (voicing | speaker),
+  data = eng_s
+)
+```
+
+```{r}
+summary(dur_lm)
+```
+
+```{r}
+ggpredict(dur_lm, c("voicing", "num_syl"))
+```
+
+
+```{r}
+dur_lm_ext <- extend(dur_lm, along = "speaker", n = 20)
+fixef(dur_lm_ext)["voicingvoiced:num_sylmono"] <- 0.05
+
+fi <- "cache/dur_lm_pow.rds"
+
+if (file.exists(fi)) {
+  dur_lm_pow <- readRDS(fi)
+} else {
+  dur_lm_pow <- powerCurve(dur_lm_ext, fixed("voicing:num_syl"), along = "speaker") 
+  saveRDS(dur_lm_pow, fi)
+}
+```
+
+```{r}
+print(dur_lm_pow)
+plot(dur_lm_pow)
+```
+
