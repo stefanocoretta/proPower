@@ -55,7 +55,9 @@ fi <- "cache/dur_lm_pow.rds"
 if (file.exists(fi)) {
   dur_lm_pow <- readRDS(fi)
 } else {
-  dur_lm_pow <- powerCurve(dur_lm_ext, fixed("voicing:num_syl"), along = "speaker") 
+  suppressMessages(
+    dur_lm_pow <- powerCurve(dur_lm_ext, fixed("voicing:num_syl"), along = "speaker") 
+  )
   saveRDS(dur_lm_pow, fi)
 }
 ```
