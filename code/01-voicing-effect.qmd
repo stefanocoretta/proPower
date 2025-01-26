@@ -65,3 +65,9 @@ print(dur_lm_pow)
 plot(dur_lm_pow)
 ```
 
+```{r}
+x <- seq(50, 200, by = 10)
+y <- x + 5
+plot(x, y/x)
+```
+
