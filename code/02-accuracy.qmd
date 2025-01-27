@@ -1,0 +1,80 @@
+---
+title: "02-shallow"
+author: "Stefano Coretta"
+---
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(ggeffects)
+library(simr)
+```
+
+```{r}
+shallow <- read_csv("data/song2020/shallow.csv")
+
+shallow_l2 <- shallow |> 
+  filter(Group == "L2", Branching == "Left")
+
+set.seed(9823)
+shallow_s <- shallow_l2 |> 
+  distinct(ID) |> 
+  slice_sample(n = 10) |> 
+  inner_join(shallow_l2, by = "ID") |> 
+  filter(Branching == "Left") |> 
+  droplevels()
+
+unique(shallow_s$ID)
+```
+
+```{r}
+sha_lm <- glmer(
+  ACC ~ Relation_type + (Relation_type | ID),
+  family = binomial,
+  data = shallow_l2
+)
+
+summary(sha_lm)
+```
+
+```{r}
+sha_lm_ext <- extend(sha_lm, along = "ID", n = 300)
+fixef(sha_lm_ext)["Relation_typeNonConstituent"] <- -0.2
+
+fi <- "cache/sha_lm_pow.rds"
+
+if (file.exists(fi)) {
+  sha_lm_pow <- readRDS(fi)
+} else {
+  suppressMessages(
+    sha_lm_pow <- powerCurve(sha_lm_ext, fixed("Relation_typeNonConstituent"), along = "ID")
+  )
+  saveRDS(sha_lm_pow, fi)
+}
+```
+
+```{r}
+print(sha_lm_pow)
+```
+
+```{r}
+sha_lm_ext_2 <- extend(sha_lm, along = "ID", n = 1000)
+fixef(sha_lm_ext_2)["Relation_typeNonConstituent"] <- -0.2
+
+fi <- "cache/sha_lm_pow_2.rds"
+
+if (file.exists(fi)) {
+  sha_lm_pow_2 <- readRDS(fi)
+} else {
+  suppressMessages(
+    sha_lm_pow_2 <- powerSim(sha_lm_ext_2, fixed("Relation_typeNonConstituent"))
+  )
+  saveRDS(sha_lm_pow_2, fi)
+}
+```
+
+```{r}
+print(sha_lm_pow_2)
+```
+
