@@ -1,0 +1,50 @@
+---
+title: "proPower: Prospective power analyses for frequentist regression models"
+author: "Dr Stefano Coretta"
+institute: "University of Edinburgh"
+date: "2025/01/23"
+format: 
+  mono-light-revealjs:
+    theme: [default, "custom.scss"]
+    history: false
+    fig-align: center
+filters:
+  - tachyonsextra
+execute: 
+  echo: true
+---
+
+## Example 1: vowel duration
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+```
+
+```{r}
+#| label: eng-s
+
+library(tidyverse)
+
+eng_s <- readRDS("data/eng_s.rds")
+eng_s |> select(speaker, num_syl, voicing, v1_duration, speech_rate_c)
+```
+
+## Effect of voicing on vowel duration
+
+```{r}
+#| label: eng-s-plot
+
+set.seed(67398)
+eng_s |> 
+  ggplot(aes(voicing, v1_duration)) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  stat_summary(fun.data = "mean_cl_boot", colour = "darkorange") +
+  facet_grid(cols = vars(num_syl)) +
+  labs(
+    x = "C voicing", y = "Vowel duration (ms)"
+  )
+```
+

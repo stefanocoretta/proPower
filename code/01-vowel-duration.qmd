@@ -21,6 +21,7 @@ eng_s <- eng_durations |>
   inner_join(eng_durations, by = "speaker") |> 
   droplevels()
 unique(eng_s$speaker)
+saveRDS(eng_s, "data/eng_s.rds")
 ```
 
 ```{r}

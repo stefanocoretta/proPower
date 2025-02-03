@@ -1,0 +1,9 @@
+[
+  {
+    "objectID": "slides/index.html#example-1-vowel-duration",
+    "href": "slides/index.html#example-1-vowel-duration",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Example 1: vowel duration",
+    "text": "Example 1: vowel duration\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 5\n   speaker num_syl voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      voiced          117.         -0.650\n 2 en02    mono    voiceless        95.0        -0.908\n 3 en02    mono    voiceless       106.         -0.900\n 4 en02    di      voiced          190.         -0.750\n 5 en02    di      voiced          195.         -0.383\n 6 en02    di      voiceless       113.         -0.655\n 7 en02    mono    voiced          203.         -0.823\n 8 en02    mono    voiceless       217.         -0.534\n 9 en02    di      voiced          120.         -0.571\n10 en02    di      voiceless       147.         -0.665\n# ℹ 710 more rows"
+  }
+]
