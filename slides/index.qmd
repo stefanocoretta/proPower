@@ -152,6 +152,75 @@ plot(dur_lm_pow)
 
 ```
 
+## Example 2: accuracy
+
+```{r}
+#| label: shall
+
+shallow_s |> 
+  ggplot(aes(Relation_type, fill = as.factor(ACC))) +
+  geom_bar(position = "fill")
+```
+
+## Smallest Meaningful Effect Size
+
+::: box-note
+- I have no idea...
+
+- Say -0.2 (log-odds).
+:::
+
+## Smallest Meaningfull Effect Size
+
+```{r}
+#| label: prob-diff
+x <- seq(-3, 3, by = 0.1)
+a <- plogis(x)
+b <- plogis(x - 0.2)
+ab <- b - a
+
+ggplot() +
+  aes(plogis(x), ab) +
+  geom_point() +
+  labs(x = "Baseline probability", y = "Probability difference")
+```
+
+## Run regression model
+
+```{r}
+#| label: sha-lm
+
+sha_lm <- glmer(
+  ACC ~ Relation_type + (Relation_type | ID),
+  family = binomial,
+  data = shallow_l2
+)
+
+summary(sha_lm)
+```
+
+## Run power analysis
+
+```{r}
+#| label: sha-pow-code
+#| eval: false
+
+sha_lm_ext <- extend(sha_lm, along = "ID", n = 300)
+fixef(sha_lm_ext)["Relation_typeNonConstituent"] <- -0.2
+
+sha_lm_pow <- powerCurve(sha_lm_ext, fixed("Relation_typeNonConstituent"), along = "ID")
+print(sha_lm_pow)
+```
+
+```{r}
+#| label: sha-pow
+#| echo: false
+
+sha_lm_pow <- readRDS("cache/sha_lm_pow.rds")
+print(sha_lm_pow)
+```
+
+
 ## References
 
 ::: {#refs}

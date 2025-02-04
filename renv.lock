@@ -461,14 +461,13 @@
       "RemoteHost": "api.github.com",
       "RemoteRepo": "coretta2019eng",
       "RemoteUsername": "stefanocoretta",
-      "RemotePkgRef": "stefanocoretta/coretta2019eng@39c5eda16b2419040d79f1419b3a4321531075a1",
-      "RemoteRef": "39c5eda16b2419040d79f1419b3a4321531075a1",
+      "RemotePkgRef": "stefanocoretta/coretta2019eng",
       "RemoteSha": "39c5eda16b2419040d79f1419b3a4321531075a1",
       "Requirements": [
         "R",
         "summarytools"
       ],
-      "Hash": "b41082702499733cdca25f1357f59193"
+      "Hash": "0c4e6af825127c6e28819ab00b54e84f"
     },
     "cowplot": {
       "Package": "cowplot",

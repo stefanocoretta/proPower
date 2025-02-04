@@ -25,6 +25,7 @@ shallow_s <- shallow_l2 |>
   filter(Branching == "Left") |> 
   droplevels()
 
+saveRDS(shallow_s, "data/shallow_s.rds")
 unique(shallow_s$ID)
 ```
 
