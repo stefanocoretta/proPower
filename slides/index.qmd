@@ -11,7 +11,8 @@ format:
 filters:
   - tachyonsextra
 execute: 
-  echo: true
+  echo: false
+bibliography: references.bib
 ---
 
 ## Example 1: vowel duration
@@ -21,10 +22,12 @@ execute:
 #| include: false
 
 library(tidyverse)
+library(simr)
 ```
 
 ```{r}
 #| label: eng-s
+#| echo: true
 
 library(tidyverse)
 
@@ -48,3 +51,108 @@ eng_s |>
   )
 ```
 
+## Prospective power analysis: overview
+
+::: box-tip
+1.  Determine Smallest Meaningful Effect Size (SMES).
+
+2.  Run regression model on pilot or simulated data.
+
+3.  Extend model with `simr::extend()` and set coefficient to SMES.
+
+4.  Run power calculation with `simr::powerCurve()`.
+:::
+
+## Smallest Meaningful Effect Size
+
+::: box-note
+-   The minimum standard deviation for measurements of vowel duration is between 2 to 5 ms [@allen1978].
+
+-   @nowak2006 finds an effect of voicing of 4.5 ms.
+
+-   Let's set the SMES to 5 ms.
+:::
+
+## Smallest Meaningful Effect Size (ratios)
+
+```{r}
+#| label: smes
+
+x <- seq(50, 300, by = 10)
+y <- x + 5
+
+ggplot() +
+  aes(x, y/x) +
+  geom_point(size = 2) +
+  labs(
+    x = "Vowel duration", y = "Difference ratio"
+  )
+
+```
+
+## Run regression model
+
+```{r}
+#| label: dur-lm
+#| echo: true
+
+dur_lm <- lmer(
+  log(v1_duration) ~
+    voicing + num_syl + voicing:num_syl + speech_rate_c +
+    (voicing | speaker),
+  data = eng_s
+)
+```
+
+## Extend model and set SMES
+
+```{r}
+#| label: extend
+#| echo: true
+
+dur_lm_ext <- extend(dur_lm, along = "speaker", n = 20)
+
+fixef(dur_lm_ext)["voicingvoiced:num_sylmono"] <- 0.03
+```
+
+## Run power analysis
+
+```{r}
+#| label: power-code
+#| echo: true
+#| eval: false
+
+library(simr)
+
+dur_lm_pow <- powerCurve(
+  dur_lm_ext,
+  fixed("voicing:num_syl"),
+  along = "speaker",
+  breaks = c(50, 70, 100)
+)
+
+print(dur_lm_pow)
+
+```
+
+```{r}
+#| label: power
+
+dur_lm_pow <- readRDS("cache/dur_lm_pow.rds")
+print(dur_lm_pow)
+
+```
+
+## Power curve plot
+
+```{r}
+#| label: power-curve
+
+plot(dur_lm_pow)
+
+```
+
+## References
+
+::: {#refs}
+:::

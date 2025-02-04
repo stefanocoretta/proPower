@@ -95,7 +95,27 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-203bff9a918f8383e7ce8e0eac244cb0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -231,6 +251,95 @@ Dr Stefano Coretta
  9 en02    di      voiced          120.         -0.571
 10 en02    di      voiceless       147.         -0.665
 # ℹ 710 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="effect-of-voicing-on-vowel-duration" class="slide level2">
+<h2>Effect of voicing on vowel duration</h2>
+
+<img data-src="index_files/figure-revealjs/eng-s-plot-1.png" width="960" class="r-stretch"></section>
+<section id="prospective-power-analysis-overview" class="slide level2">
+<h2>Prospective power analysis: overview</h2>
+<div class="box-tip">
+<ol type="1">
+<li><p>Determine Smallest Meaningful Effect Size (SMES).</p></li>
+<li><p>Run regression model on pilot or simulated data.</p></li>
+<li><p>Extend model with <code>simr::extend()</code> and set coefficient to SMES.</p></li>
+<li><p>Run power calculation with <code>simr::powerCurve()</code>.</p></li>
+</ol>
+</div>
+</section>
+<section id="smallest-meaningful-effect-size" class="slide level2">
+<h2>Smallest Meaningful Effect Size</h2>
+<div class="box-note">
+<ul>
+<li><p>The minimum standard deviation for measurements of vowel duration is between 2 to 5 ms <span class="citation" data-cites="allen1978">(<a href="#/references" role="doc-biblioref" onclick="">Allen 1978</a>)</span>.</p></li>
+<li><p><span class="citation" data-cites="nowak2006">Nowak (<a href="#/references" role="doc-biblioref" onclick="">2006</a>)</span> finds an effect of voicing of 4.5 ms.</p></li>
+<li><p>Let’s set the SMES to 5 ms.</p></li>
+</ul>
+</div>
+</section>
+<section id="smallest-meaningful-effect-size-ratios" class="slide level2">
+<h2>Smallest Meaningful Effect Size (ratios)</h2>
+
+<img data-src="index_files/figure-revealjs/smes-1.png" width="960" class="r-stretch"></section>
+<section id="run-regression-model" class="slide level2">
+<h2>Run regression model</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>dur_lm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
+<span id="cb3-2"><a></a>  <span class="fu">log</span>(v1_duration) <span class="sc">~</span></span>
+<span id="cb3-3"><a></a>    voicing <span class="sc">+</span> num_syl <span class="sc">+</span> voicing<span class="sc">:</span>num_syl <span class="sc">+</span> speech_rate_c <span class="sc">+</span></span>
+<span id="cb3-4"><a></a>    (voicing <span class="sc">|</span> speaker),</span>
+<span id="cb3-5"><a></a>  <span class="at">data =</span> eng_s</span>
+<span id="cb3-6"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extend-model-and-set-smes" class="slide level2">
+<h2>Extend model and set SMES</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>dur_lm_ext <span class="ot">&lt;-</span> <span class="fu">extend</span>(dur_lm, <span class="at">along =</span> <span class="st">"speaker"</span>, <span class="at">n =</span> <span class="dv">20</span>)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a><span class="fu">fixef</span>(dur_lm_ext)[<span class="st">"voicingvoiced:num_sylmono"</span>] <span class="ot">&lt;-</span> <span class="fl">0.03</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="run-power-analysis" class="slide level2">
+<h2>Run power analysis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(simr)</span>
+<span id="cb5-2"><a></a></span>
+<span id="cb5-3"><a></a>dur_lm_pow <span class="ot">&lt;-</span> <span class="fu">powerCurve</span>(</span>
+<span id="cb5-4"><a></a>  dur_lm_ext,</span>
+<span id="cb5-5"><a></a>  <span class="fu">fixed</span>(<span class="st">"voicing:num_syl"</span>),</span>
+<span id="cb5-6"><a></a>  <span class="at">along =</span> <span class="st">"speaker"</span>,</span>
+<span id="cb5-7"><a></a>  <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">100</span>)</span>
+<span id="cb5-8"><a></a>)</span>
+<span id="cb5-9"><a></a></span>
+<span id="cb5-10"><a></a><span class="fu">print</span>(dur_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Power for predictor 'voicing:num_syl', (95% confidence interval),
+by number of levels in speaker:
+     50: 83.30% (80.84, 85.56) - 6000 rows
+     70: 92.90% (91.13, 94.41) - 8400 rows
+    100: 98.90% (98.04, 99.45) - 12000 rows
+
+Time elapsed: 1 h 12 m 47 s</code></pre>
+</div>
+</div>
+</section>
+<section id="power-curve-plot" class="slide level2">
+<h2>Power curve plot</h2>
+
+<img data-src="index_files/figure-revealjs/power-curve-1.png" width="960" class="r-stretch"></section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-allen1978" class="csl-entry" role="listitem">
+Allen, George D. 1978. <span>“Vowel Duration Measurement: A Reliability Study.”</span> <em>The Journal of the Acoustical Society of America</em> 63 (4): 11761185. <a href="https://doi.org/10.1121/1.381826">https://doi.org/10.1121/1.381826</a>.
+</div>
+<div id="ref-nowak2006" class="csl-entry" role="listitem">
+Nowak, Pawel. 2006. <span>“Vowel Reduction in Polish.”</span> PhD thesis.
 </div>
 </div>
 

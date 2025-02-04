@@ -48,8 +48,8 @@ ggpredict(dur_lm, c("voicing", "num_syl"))
 
 
 ```{r}
-dur_lm_ext <- extend(dur_lm, along = "speaker", n = 20)
-fixef(dur_lm_ext)["voicingvoiced:num_sylmono"] <- 0.05
+dur_lm_ext <- extend(dur_lm, along = "speaker", n = 100)
+fixef(dur_lm_ext)["voicingvoiced:num_sylmono"] <- 0.03
 
 fi <- "cache/dur_lm_pow.rds"
 
@@ -57,7 +57,7 @@ if (file.exists(fi)) {
   dur_lm_pow <- readRDS(fi)
 } else {
   suppressMessages(
-    dur_lm_pow <- powerCurve(dur_lm_ext, fixed("voicing:num_syl"), along = "speaker") 
+    dur_lm_pow <- powerCurve(dur_lm_ext, fixed("voicing:num_syl"), along = "speaker", breaks = c(50, 70, 100)) 
   )
   saveRDS(dur_lm_pow, fi)
 }

@@ -5,5 +5,68 @@
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Example 1: vowel duration",
     "text": "Example 1: vowel duration\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 5\n   speaker num_syl voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      voiced          117.         -0.650\n 2 en02    mono    voiceless        95.0        -0.908\n 3 en02    mono    voiceless       106.         -0.900\n 4 en02    di      voiced          190.         -0.750\n 5 en02    di      voiced          195.         -0.383\n 6 en02    di      voiceless       113.         -0.655\n 7 en02    mono    voiced          203.         -0.823\n 8 en02    mono    voiceless       217.         -0.534\n 9 en02    di      voiced          120.         -0.571\n10 en02    di      voiceless       147.         -0.665\n# ℹ 710 more rows"
+  },
+  {
+    "objectID": "slides/index.html#effect-of-voicing-on-vowel-duration",
+    "href": "slides/index.html#effect-of-voicing-on-vowel-duration",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Effect of voicing on vowel duration",
+    "text": "Effect of voicing on vowel duration"
+  },
+  {
+    "objectID": "slides/index.html#smallest-meaningful-effect-size",
+    "href": "slides/index.html#smallest-meaningful-effect-size",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Smallest Meaningful Effect Size",
+    "text": "Smallest Meaningful Effect Size\n\n\nThe minimum standard deviation for measurements of vowel duration is between 2 to 5 ms (Allen 1978).\nNowak (2006) finds an effect of voicing of 4.5 ms.\nLet’s set the SMES to 5 ms."
+  },
+  {
+    "objectID": "slides/index.html#references",
+    "href": "slides/index.html#references",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "References",
+    "text": "References\n\n\nAllen, George D. 1978. “Vowel Duration Measurement: A Reliability Study.” The Journal of the Acoustical Society of America 63 (4): 11761185. https://doi.org/10.1121/1.381826.\n\n\nNowak, Pawel. 2006. “Vowel Reduction in Polish.” PhD thesis."
+  },
+  {
+    "objectID": "slides/index.html#prospective-power-analysis-overview",
+    "href": "slides/index.html#prospective-power-analysis-overview",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Prospective power analysis: overview",
+    "text": "Prospective power analysis: overview\n\n\nDetermine Smallest Meaningful Effect Size (SMES).\nRun regression model on pilot or simulated data.\nExtend model with simr::extend() and set coefficient to SMES.\nRun power calculation with simr::powerCurve()."
+  },
+  {
+    "objectID": "slides/index.html#smallest-meaningful-effect-size-ratios",
+    "href": "slides/index.html#smallest-meaningful-effect-size-ratios",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Smallest Meaningful Effect Size (ratios)",
+    "text": "Smallest Meaningful Effect Size (ratios)"
+  },
+  {
+    "objectID": "slides/index.html#run-regression-model",
+    "href": "slides/index.html#run-regression-model",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Run regression model",
+    "text": "Run regression model\n\ndur_lm &lt;- lmer(\n  log(v1_duration) ~\n    voicing + num_syl + voicing:num_syl + speech_rate_c +\n    (voicing | speaker),\n  data = eng_s\n)"
+  },
+  {
+    "objectID": "slides/index.html#extend-model-and-set-smes",
+    "href": "slides/index.html#extend-model-and-set-smes",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Extend model and set SMES",
+    "text": "Extend model and set SMES\n\ndur_lm_ext &lt;- extend(dur_lm, along = \"speaker\", n = 20)\n\nfixef(dur_lm_ext)[\"voicingvoiced:num_sylmono\"] &lt;- 0.03"
+  },
+  {
+    "objectID": "slides/index.html#run-power-analysis",
+    "href": "slides/index.html#run-power-analysis",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Run power analysis",
+    "text": "Run power analysis\n\nlibrary(simr)\n\ndur_lm_pow &lt;- powerCurve(\n  dur_lm_ext,\n  fixed(\"voicing:num_syl\"),\n  along = \"speaker\",\n  breaks = c(50, 70, 100)\n)\n\nprint(dur_lm_pow)\n\n\n\nPower for predictor 'voicing:num_syl', (95% confidence interval),\nby number of levels in speaker:\n     50: 83.30% (80.84, 85.56) - 6000 rows\n     70: 92.90% (91.13, 94.41) - 8400 rows\n    100: 98.90% (98.04, 99.45) - 12000 rows\n\nTime elapsed: 1 h 12 m 47 s"
+  },
+  {
+    "objectID": "slides/index.html#power-curve-plot",
+    "href": "slides/index.html#power-curve-plot",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Power curve plot",
+    "text": "Power curve plot"
   }
 ]
