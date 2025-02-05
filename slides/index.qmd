@@ -17,6 +17,16 @@ bibliography: references.bib
 
 ## Example 1: vowel duration
 
+::: box-note
+-   Data from @coretta2019f, @coretta2019i.
+
+-   Voicing effect in Manchester English.
+
+-   Mono- and di-syllabic nonce words.
+:::
+
+## Example 1: the data
+
 ```{r}
 #| label: setup
 #| include: false
@@ -154,8 +164,36 @@ plot(dur_lm_pow)
 
 ## Example 2: accuracy
 
+::: box-note
+-   Data from @song2020.
+
+-   Shallow morphological representation in L2 speakers.
+
+-   **Lexical decision task**: Is the word a real English word or not?
+
+-   **Priming paradigm**:
+
+    -   **Prime**: *prolong* (unrelated), *unkind* (constituent), *kindness* (non-constituent).
+
+    -   **Target**: *unkindness* (*\[un-kind\]-ness*, not *un-\[kind-ness\]*).
+
+-   Constituent vs non-constituent accuracy in L2 speakers.
+:::
+
+## Example 2: the data
+
 ```{r}
 #| label: shall
+#| echo: true
+
+shallow_s <- readRDS("data/shallow_s.rds")
+shallow_s
+```
+
+## Accuracy by relation type
+
+```{r}
+#| label: shall-plot
 
 shallow_s |> 
   ggplot(aes(Relation_type, fill = as.factor(ACC))) +
@@ -165,9 +203,9 @@ shallow_s |>
 ## Smallest Meaningful Effect Size
 
 ::: box-note
-- I have no idea...
+-   I have no idea...
 
-- Say -0.2 (log-odds).
+-   Say -0.2 (log-odds).
 :::
 
 ## Smallest Meaningfull Effect Size
@@ -189,11 +227,12 @@ ggplot() +
 
 ```{r}
 #| label: sha-lm
+#| echo: true
 
 sha_lm <- glmer(
   ACC ~ Relation_type + (Relation_type | ID),
   family = binomial,
-  data = shallow_l2
+  data = shallow_s
 )
 
 summary(sha_lm)
@@ -204,6 +243,7 @@ summary(sha_lm)
 ```{r}
 #| label: sha-pow-code
 #| eval: false
+#| echo: true
 
 sha_lm_ext <- extend(sha_lm, along = "ID", n = 300)
 fixef(sha_lm_ext)["Relation_typeNonConstituent"] <- -0.2
@@ -220,6 +260,26 @@ sha_lm_pow <- readRDS("cache/sha_lm_pow.rds")
 print(sha_lm_pow)
 ```
 
+## Try with 1000 participants
+
+```{r}
+#| label: sha-pow-2-code
+#| eval: false
+#| echo: true
+
+sha_lm_ext_2 <- extend(sha_lm, along = "ID", n = 1000)
+fixef(sha_lm_ext_2)["Relation_typeNonConstituent"] <- -0.2
+
+sha_lm_pow_2 <- powerSim(sha_lm_ext_2, fixed("Relation_typeNonConstituent"))
+```
+
+```{r}
+#| label: sha-pow-2
+#| echo: false
+
+sha_lm_pow_2 <- readRDS("cache/sha_lm_pow_2.rds")
+print(sha_lm_pow_2)
+```
 
 ## References
 

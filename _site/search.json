@@ -4,7 +4,7 @@
     "href": "slides/index.html#example-1-vowel-duration",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Example 1: vowel duration",
-    "text": "Example 1: vowel duration\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 5\n   speaker num_syl voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      voiced          117.         -0.650\n 2 en02    mono    voiceless        95.0        -0.908\n 3 en02    mono    voiceless       106.         -0.900\n 4 en02    di      voiced          190.         -0.750\n 5 en02    di      voiced          195.         -0.383\n 6 en02    di      voiceless       113.         -0.655\n 7 en02    mono    voiced          203.         -0.823\n 8 en02    mono    voiceless       217.         -0.534\n 9 en02    di      voiced          120.         -0.571\n10 en02    di      voiceless       147.         -0.665\n# ℹ 710 more rows"
+    "text": "Example 1: vowel duration\n\n\nData from Coretta (2019b), Coretta (2019a).\nVoicing effect in Manchester English.\nMono- and di-syllabic nonce words."
   },
   {
     "objectID": "slides/index.html#effect-of-voicing-on-vowel-duration",
@@ -25,7 +25,7 @@
     "href": "slides/index.html#references",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "References",
-    "text": "References\n\n\nAllen, George D. 1978. “Vowel Duration Measurement: A Reliability Study.” The Journal of the Acoustical Society of America 63 (4): 11761185. https://doi.org/10.1121/1.381826.\n\n\nNowak, Pawel. 2006. “Vowel Reduction in Polish.” PhD thesis."
+    "text": "References\n\n\nAllen, George D. 1978. “Vowel Duration Measurement: A Reliability Study.” The Journal of the Acoustical Society of America 63 (4): 11761185. https://doi.org/10.1121/1.381826.\n\n\nCoretta, Stefano. 2019a. “Compensatory Aspects of the Effect of Voicing on Vowel Duration in English [Data V1.0.0].” https://doi.org/10.17605/OSF.IO/EP8WB.\n\n\n———. 2019b. “Temporal (in)stability in English Monosyllabic and Disyllabic Words: Insights on the Effect of Voicing on Vowel Duration.” https://doi.org/10.31219/osf.io/jvwa8.\n\n\nNowak, Pawel. 2006. “Vowel Reduction in Polish.” PhD thesis."
   },
   {
     "objectID": "slides/index.html#prospective-power-analysis-overview",
@@ -68,5 +68,68 @@
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Power curve plot",
     "text": "Power curve plot"
+  },
+  {
+    "objectID": "slides/index.html#example-2-accuracy",
+    "href": "slides/index.html#example-2-accuracy",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Example 2: accuracy",
+    "text": "Example 2: accuracy\n\n\nData from (song2020?).\nShallow morphological representation in L2 speakers.\nLexical decision task: Is the word a real English word or not?\nPriming paradigm:\n\nPrime: prolong (unrelated), unkind (constituent), kindness (non-constituent).\nTarget: unkindness ([un-kind]-ness, not un-[kind-ness]).\n\nConstituent vs non-constituent accuracy in L2 speakers."
+  },
+  {
+    "objectID": "slides/index.html#example-2-the-data",
+    "href": "slides/index.html#example-2-the-data",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Example 2: the data",
+    "text": "Example 2: the data\n\nshallow_s &lt;- readRDS(\"data/shallow_s.rds\")\nshallow_s\n\n# A tibble: 180 × 11\n   ID    Group List  Target         ACC    RT logRT Critical_Filler Word_Nonword\n   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;       \n 1 L2_36 L2    D     unholiness       1   878  6.78 Critical        Word        \n 2 L2_36 L2    D     rehydratable     1  1263  7.14 Critical        Word        \n 3 L2_36 L2    D     unclearness      1  1296  7.17 Critical        Word        \n 4 L2_36 L2    D     resellable       1  1344  7.20 Critical        Word        \n 5 L2_36 L2    D     unsharpness      0  1192  7.08 Critical        Word        \n 6 L2_36 L2    D     reattachable     1   969  6.88 Critical        Word        \n 7 L2_36 L2    D     uncleverness     0   835  6.73 Critical        Word        \n 8 L2_36 L2    D     unwariness       1  1028  6.94 Critical        Word        \n 9 L2_36 L2    D     reclosable       1  1028  6.94 Critical        Word        \n10 L2_36 L2    D     reusable         1   814  6.70 Critical        Word        \n# ℹ 170 more rows\n# ℹ 2 more variables: Relation_type &lt;chr&gt;, Branching &lt;chr&gt;"
+  },
+  {
+    "objectID": "slides/index.html#accuracy-by-relation-type",
+    "href": "slides/index.html#accuracy-by-relation-type",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Accuracy by relation type",
+    "text": "Accuracy by relation type"
+  },
+  {
+    "objectID": "slides/index.html#smallest-meaningful-effect-size-1",
+    "href": "slides/index.html#smallest-meaningful-effect-size-1",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Smallest Meaningful Effect Size",
+    "text": "Smallest Meaningful Effect Size\n\n\nI have no idea…\nSay -0.2 (log-odds)."
+  },
+  {
+    "objectID": "slides/index.html#smallest-meaningfull-effect-size",
+    "href": "slides/index.html#smallest-meaningfull-effect-size",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Smallest Meaningfull Effect Size",
+    "text": "Smallest Meaningfull Effect Size"
+  },
+  {
+    "objectID": "slides/index.html#run-regression-model-1",
+    "href": "slides/index.html#run-regression-model-1",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Run regression model",
+    "text": "Run regression model\n\nsha_lm &lt;- glmer(\n  ACC ~ Relation_type + (Relation_type | ID),\n  family = binomial,\n  data = shallow_s\n)\n\nsummary(sha_lm)\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: ACC ~ Relation_type + (Relation_type | ID)\n   Data: shallow_s\n\n     AIC      BIC   logLik deviance df.resid \n   243.9    272.7   -113.0    225.9      171 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-1.8220 -1.1732  0.5994  0.7376  0.9667 \n\nRandom effects:\n Groups Name                        Variance Std.Dev. Corr       \n ID     (Intercept)                 0.5606   0.7487              \n        Relation_typeNonConstituent 0.1617   0.4022   -1.00      \n        Relation_typeUnrelated      0.2396   0.4895   -1.00  1.00\nNumber of obs: 180, groups:  ID, 10\n\nFixed effects:\n                              Estimate Std. Error z value Pr(&gt;|z|)  \n(Intercept)                  0.8699404  0.3904283   2.228   0.0259 *\nRelation_typeNonConstituent  0.0008542  0.4401554   0.002   0.9985  \nRelation_typeUnrelated      -0.3867280  0.4379963  -0.883   0.3773  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) Rlt_NC\nRltn_typNnC -0.730       \nRltn_typUnr -0.777  0.596\noptimizer (Nelder_Mead) convergence code: 0 (OK)\nModel failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)"
+  },
+  {
+    "objectID": "slides/index.html#run-power-analysis-1",
+    "href": "slides/index.html#run-power-analysis-1",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Run power analysis",
+    "text": "Run power analysis\n\nsha_lm_ext &lt;- extend(sha_lm, along = \"ID\", n = 300)\nfixef(sha_lm_ext)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nsha_lm_pow &lt;- powerCurve(sha_lm_ext, fixed(\"Relation_typeNonConstituent\"), along = \"ID\")\nprint(sha_lm_pow)\n\n\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval),\nby largest value of ID:\n    100:  4.80% ( 3.56,  6.31) - 54 rows\n    130: 12.10% (10.14, 14.28) - 648 rows\n    160: 21.30% (18.80, 23.97) - 1242 rows\n    190: 24.80% (22.15, 27.60) - 1836 rows\n     22: 30.80% (27.95, 33.76) - 2430 rows\n     25: 37.30% (34.29, 40.38) - 3024 rows\n     28: 40.20% (37.14, 43.31) - 3618 rows\n     39: 44.80% (41.69, 47.94) - 4212 rows\n     69: 50.40% (47.25, 53.54) - 4806 rows\n     99: 53.30% (50.15, 56.43) - 5400 rows\n\nTime elapsed: 6 h 7 m 11 s"
+  },
+  {
+    "objectID": "slides/index.html#try-with-1000-participants",
+    "href": "slides/index.html#try-with-1000-participants",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Try with 1000 participants",
+    "text": "Try with 1000 participants\n\nsha_lm_ext_2 &lt;- extend(sha_lm, along = \"ID\", n = 1000)\nfixef(sha_lm_ext_2)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nsha_lm_pow_2 &lt;- powerSim(sha_lm_ext_2, fixed(\"Relation_typeNonConstituent\"))\n\n\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval):\n      97.00% (95.74, 97.97)\n\nTest: z-test\n      Effect size for Relation_typeNonConstituent is -0.20\n\nBased on 1000 simulations, (768 warnings, 0 errors)\nalpha = 0.05, nrow = 18000\n\nTime elapsed: 4 h 31 m 3 s"
+  },
+  {
+    "objectID": "slides/index.html#example-1-the-data",
+    "href": "slides/index.html#example-1-the-data",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Example 1: the data",
+    "text": "Example 1: the data\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 5\n   speaker num_syl voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      voiced          117.         -0.650\n 2 en02    mono    voiceless        95.0        -0.908\n 3 en02    mono    voiceless       106.         -0.900\n 4 en02    di      voiced          190.         -0.750\n 5 en02    di      voiced          195.         -0.383\n 6 en02    di      voiceless       113.         -0.655\n 7 en02    mono    voiced          203.         -0.823\n 8 en02    mono    voiceless       217.         -0.534\n 9 en02    di      voiced          120.         -0.571\n10 en02    di      voiceless       147.         -0.665\n# ℹ 710 more rows"
   }
 ]
