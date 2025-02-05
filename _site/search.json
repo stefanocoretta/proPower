@@ -1,10 +1,31 @@
 [
   {
+    "objectID": "data/song2020/shallow.html",
+    "href": "data/song2020/shallow.html",
+    "title": "Second language users exhibit shallow morphological processing",
+    "section": "",
+    "text": "Group\n\nParticipant group (L1, L2).\n\nID\n\nSubject unique identifier.\n\nList\n\nWord list.\n\nTarget\n\nTarget word.\n\nRT\n\nReaction time (ms).\n\nRT_log\n\nLogged reaction time.\n\nCritical_Filler\n\nWhether the trial is a critical or a filler trial.\n\nWord_Nonword\n\nWhether the word is a real word or a nonce word (only word is present in the data).\n\nRelation_type\n\nWhether the relation type is Unrelated, Constituent, or NonConstituent.\n\nBranching\n\nWhether the trial word is Left-branching or Right-branching."
+  },
+  {
+    "objectID": "data/song2020/shallow.html#description",
+    "href": "data/song2020/shallow.html#description",
+    "title": "Second language users exhibit shallow morphological processing",
+    "section": "",
+    "text": "Group\n\nParticipant group (L1, L2).\n\nID\n\nSubject unique identifier.\n\nList\n\nWord list.\n\nTarget\n\nTarget word.\n\nRT\n\nReaction time (ms).\n\nRT_log\n\nLogged reaction time.\n\nCritical_Filler\n\nWhether the trial is a critical or a filler trial.\n\nWord_Nonword\n\nWhether the word is a real word or a nonce word (only word is present in the data).\n\nRelation_type\n\nWhether the relation type is Unrelated, Constituent, or NonConstituent.\n\nBranching\n\nWhether the trial word is Left-branching or Right-branching."
+  },
+  {
     "objectID": "slides/index.html#example-1-vowel-duration",
     "href": "slides/index.html#example-1-vowel-duration",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Example 1: vowel duration",
     "text": "Example 1: vowel duration\n\n\nData from Coretta (2019b), Coretta (2019a).\nVoicing effect in Manchester English.\nMono- and di-syllabic nonce words."
+  },
+  {
+    "objectID": "slides/index.html#example-1-the-data",
+    "href": "slides/index.html#example-1-the-data",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Example 1: the data",
+    "text": "Example 1: the data\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 5\n   speaker num_syl voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      voiced          117.         -0.650\n 2 en02    mono    voiceless        95.0        -0.908\n 3 en02    mono    voiceless       106.         -0.900\n 4 en02    di      voiced          190.         -0.750\n 5 en02    di      voiced          195.         -0.383\n 6 en02    di      voiceless       113.         -0.655\n 7 en02    mono    voiced          203.         -0.823\n 8 en02    mono    voiceless       217.         -0.534\n 9 en02    di      voiced          120.         -0.571\n10 en02    di      voiceless       147.         -0.665\n# ℹ 710 more rows"
   },
   {
     "objectID": "slides/index.html#effect-of-voicing-on-vowel-duration",
@@ -14,25 +35,18 @@
     "text": "Effect of voicing on vowel duration"
   },
   {
-    "objectID": "slides/index.html#smallest-meaningful-effect-size",
-    "href": "slides/index.html#smallest-meaningful-effect-size",
-    "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Smallest Meaningful Effect Size",
-    "text": "Smallest Meaningful Effect Size\n\n\nThe minimum standard deviation for measurements of vowel duration is between 2 to 5 ms (Allen 1978).\nNowak (2006) finds an effect of voicing of 4.5 ms.\nLet’s set the SMES to 5 ms."
-  },
-  {
-    "objectID": "slides/index.html#references",
-    "href": "slides/index.html#references",
-    "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "References",
-    "text": "References\n\n\nAllen, George D. 1978. “Vowel Duration Measurement: A Reliability Study.” The Journal of the Acoustical Society of America 63 (4): 11761185. https://doi.org/10.1121/1.381826.\n\n\nCoretta, Stefano. 2019a. “Compensatory Aspects of the Effect of Voicing on Vowel Duration in English [Data V1.0.0].” https://doi.org/10.17605/OSF.IO/EP8WB.\n\n\n———. 2019b. “Temporal (in)stability in English Monosyllabic and Disyllabic Words: Insights on the Effect of Voicing on Vowel Duration.” https://doi.org/10.31219/osf.io/jvwa8.\n\n\nNowak, Pawel. 2006. “Vowel Reduction in Polish.” PhD thesis."
-  },
-  {
     "objectID": "slides/index.html#prospective-power-analysis-overview",
     "href": "slides/index.html#prospective-power-analysis-overview",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Prospective power analysis: overview",
     "text": "Prospective power analysis: overview\n\n\nDetermine Smallest Meaningful Effect Size (SMES).\nRun regression model on pilot or simulated data.\nExtend model with simr::extend() and set coefficient to SMES.\nRun power calculation with simr::powerCurve()."
+  },
+  {
+    "objectID": "slides/index.html#smallest-meaningful-effect-size",
+    "href": "slides/index.html#smallest-meaningful-effect-size",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Smallest Meaningful Effect Size",
+    "text": "Smallest Meaningful Effect Size\n\n\nThe minimum standard deviation for measurements of vowel duration is between 2 to 5 ms (Allen 1978).\nNowak (2006) finds an effect of voicing of 4.5 ms.\nLet’s set the SMES to 5 ms."
   },
   {
     "objectID": "slides/index.html#smallest-meaningful-effect-size-ratios",
@@ -74,7 +88,7 @@
     "href": "slides/index.html#example-2-accuracy",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Example 2: accuracy",
-    "text": "Example 2: accuracy\n\n\nData from (song2020?).\nShallow morphological representation in L2 speakers.\nLexical decision task: Is the word a real English word or not?\nPriming paradigm:\n\nPrime: prolong (unrelated), unkind (constituent), kindness (non-constituent).\nTarget: unkindness ([un-kind]-ness, not un-[kind-ness]).\n\nConstituent vs non-constituent accuracy in L2 speakers."
+    "text": "Example 2: accuracy\n\n\nData from Song et al. (2020).\nShallow morphological representation in L2 speakers.\nLexical decision task: Is the word a real English word or not?\nPriming paradigm:\n\nPrime: prolong (unrelated), unkind (constituent), kindness (non-constituent).\nTarget: unkindness ([un-kind]-ness, not un-[kind-ness]).\n\nConstituent vs non-constituent accuracy in L2 speakers."
   },
   {
     "objectID": "slides/index.html#example-2-the-data",
@@ -126,10 +140,38 @@
     "text": "Try with 1000 participants\n\nsha_lm_ext_2 &lt;- extend(sha_lm, along = \"ID\", n = 1000)\nfixef(sha_lm_ext_2)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nsha_lm_pow_2 &lt;- powerSim(sha_lm_ext_2, fixed(\"Relation_typeNonConstituent\"))\n\n\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval):\n      97.00% (95.74, 97.97)\n\nTest: z-test\n      Effect size for Relation_typeNonConstituent is -0.20\n\nBased on 1000 simulations, (768 warnings, 0 errors)\nalpha = 0.05, nrow = 18000\n\nTime elapsed: 4 h 31 m 3 s"
   },
   {
-    "objectID": "slides/index.html#example-1-the-data",
-    "href": "slides/index.html#example-1-the-data",
+    "objectID": "slides/index.html#references",
+    "href": "slides/index.html#references",
     "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Example 1: the data",
-    "text": "Example 1: the data\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 5\n   speaker num_syl voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      voiced          117.         -0.650\n 2 en02    mono    voiceless        95.0        -0.908\n 3 en02    mono    voiceless       106.         -0.900\n 4 en02    di      voiced          190.         -0.750\n 5 en02    di      voiced          195.         -0.383\n 6 en02    di      voiceless       113.         -0.655\n 7 en02    mono    voiced          203.         -0.823\n 8 en02    mono    voiceless       217.         -0.534\n 9 en02    di      voiced          120.         -0.571\n10 en02    di      voiceless       147.         -0.665\n# ℹ 710 more rows"
+    "section": "References",
+    "text": "References\n\n\nAllen, George D. 1978. “Vowel Duration Measurement: A Reliability Study.” The Journal of the Acoustical Society of America 63 (4): 11761185. https://doi.org/10.1121/1.381826.\n\n\nCoretta, Stefano. 2019a. “Compensatory Aspects of the Effect of Voicing on Vowel Duration in English [Data V1.0.0].” https://doi.org/10.17605/OSF.IO/EP8WB.\n\n\n———. 2019b. “Temporal (in)stability in English Monosyllabic and Disyllabic Words: Insights on the Effect of Voicing on Vowel Duration.” https://doi.org/10.31219/osf.io/jvwa8.\n\n\nNowak, Pawel. 2006. “Vowel Reduction in Polish.” PhD thesis.\n\n\nSong, Yoonsang, Youngah Do, Arthur L. Thompson, Eileen R. Waegemaekers, and Jongbong Lee. 2020. “Second Language Users Exhibit Shallow Morphological Processing.” Studies in Second Language Acquisition 42 (5): 1121–36. https://doi.org/10.1017/s0272263120000170."
+  },
+  {
+    "objectID": "code/02-accuracy.html",
+    "href": "code/02-accuracy.html",
+    "title": "02-shallow",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(ggeffects)\nlibrary(simr)\n\nLoading required package: lme4\nLoading required package: Matrix\n\nAttaching package: 'Matrix'\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\n\nAttaching package: 'simr'\n\nThe following object is masked from 'package:lme4':\n\n    getData\n\nThe following object is masked from 'package:stringr':\n\n    fixed\n\n\n\nshallow &lt;- read_csv(\"data/song2020/shallow.csv\")\n\nRows: 6500 Columns: 11\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (8): Group, ID, List, Target, Critical_Filler, Word_Nonword, Relation_ty...\ndbl (3): ACC, RT, logRT\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nshallow_l2 &lt;- shallow |&gt; \n  filter(Group == \"L2\", Branching == \"Left\")\n\nset.seed(9823)\nshallow_s &lt;- shallow_l2 |&gt; \n  distinct(ID) |&gt; \n  slice_sample(n = 10) |&gt; \n  inner_join(shallow_l2, by = \"ID\") |&gt; \n  filter(Branching == \"Left\") |&gt; \n  droplevels()\n\nsaveRDS(shallow_s, \"data/shallow_s.rds\")\nunique(shallow_s$ID)\n\n [1] \"L2_36\" \"L2_18\" \"L2_35\" \"L2_24\" \"L2_03\" \"L2_11\" \"L2_37\" \"L2_10\" \"L2_30\"\n[10] \"L2_26\"\n\n\n\nsha_lm &lt;- glmer(\n  ACC ~ Relation_type + (Relation_type | ID),\n  family = binomial,\n  data = shallow_l2\n)\n\nsummary(sha_lm)\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: ACC ~ Relation_type + (Relation_type | ID)\n   Data: shallow_l2\n\n     AIC      BIC   logLik deviance df.resid \n   736.5    776.8   -359.3    718.5      639 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-2.7847 -0.9242  0.4295  0.6211  1.3398 \n\nRandom effects:\n Groups Name                        Variance Std.Dev. Corr       \n ID     (Intercept)                 0.79532  0.8918              \n        Relation_typeNonConstituent 0.03407  0.1846    1.00      \n        Relation_typeUnrelated      0.14092  0.3754   -1.00 -1.00\nNumber of obs: 648, groups:  ID, 36\n\nFixed effects:\n                            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)                  1.42605    0.24311   5.866 4.47e-09 ***\nRelation_typeNonConstituent -0.09972    0.27212  -0.366  0.71403    \nRelation_typeUnrelated      -0.68990    0.25174  -2.740  0.00613 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) Rlt_NC\nRltn_typNnC -0.479       \nRltn_typUnr -0.756  0.501\n\n\n\nsha_lm_ext &lt;- extend(sha_lm, along = \"ID\", n = 300)\nfixef(sha_lm_ext)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nfi &lt;- \"cache/sha_lm_pow.rds\"\n\nif (file.exists(fi)) {\n  sha_lm_pow &lt;- readRDS(fi)\n} else {\n  suppressMessages(\n    sha_lm_pow &lt;- powerCurve(sha_lm_ext, fixed(\"Relation_typeNonConstituent\"), along = \"ID\")\n  )\n  saveRDS(sha_lm_pow, fi)\n}\n\n\nprint(sha_lm_pow)\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval),\nby largest value of ID:\n    100:  4.80% ( 3.56,  6.31) - 54 rows\n    130: 12.10% (10.14, 14.28) - 648 rows\n    160: 21.30% (18.80, 23.97) - 1242 rows\n    190: 24.80% (22.15, 27.60) - 1836 rows\n     22: 30.80% (27.95, 33.76) - 2430 rows\n     25: 37.30% (34.29, 40.38) - 3024 rows\n     28: 40.20% (37.14, 43.31) - 3618 rows\n     39: 44.80% (41.69, 47.94) - 4212 rows\n     69: 50.40% (47.25, 53.54) - 4806 rows\n     99: 53.30% (50.15, 56.43) - 5400 rows\n\nTime elapsed: 6 h 7 m 11 s\n\n\n\nsha_lm_ext_2 &lt;- extend(sha_lm, along = \"ID\", n = 1000)\nfixef(sha_lm_ext_2)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nfi &lt;- \"cache/sha_lm_pow_2.rds\"\n\nif (file.exists(fi)) {\n  sha_lm_pow_2 &lt;- readRDS(fi)\n} else {\n  suppressMessages(\n    sha_lm_pow_2 &lt;- powerSim(sha_lm_ext_2, fixed(\"Relation_typeNonConstituent\"))\n  )\n  saveRDS(sha_lm_pow_2, fi)\n}\n\n\nprint(sha_lm_pow_2)\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval):\n      97.00% (95.74, 97.97)\n\nTest: z-test\n      Effect size for Relation_typeNonConstituent is -0.20\n\nBased on 1000 simulations, (768 warnings, 0 errors)\nalpha = 0.05, nrow = 18000\n\nTime elapsed: 4 h 31 m 3 s"
+  },
+  {
+    "objectID": "code/01-vowel-duration.html",
+    "href": "code/01-vowel-duration.html",
+    "title": "Prepare data",
+    "section": "",
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(ggeffects)\nlibrary(simr)\n\nLoading required package: lme4\nLoading required package: Matrix\n\nAttaching package: 'Matrix'\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\n\nAttaching package: 'simr'\n\nThe following object is masked from 'package:lme4':\n\n    getData\n\nThe following object is masked from 'package:stringr':\n\n    fixed\n\nlibrary(coretta2019eng)\ndata(\"eng_durations\")\n\n\nset.seed(9872)\neng_s &lt;- eng_durations |&gt;\n  distinct(speaker) |&gt; \n  slice_sample(n = 6) |&gt; \n  inner_join(eng_durations, by = \"speaker\") |&gt; \n  droplevels()\nunique(eng_s$speaker)\n\n[1] en02 en11 en01 en04 en03 en07\nLevels: en01 en02 en03 en04 en07 en11\n\nsaveRDS(eng_s, \"data/eng_s.rds\")\n\n\neng_s |&gt; \n  ggplot(aes(voicing, v1_duration)) +\n  geom_jitter() +\n  facet_grid(cols = vars(num_syl))\n\n\n\n\n\n\n\n\n\ndur_lm &lt;- lmer(\n  log(v1_duration) ~ voicing + num_syl + voicing:num_syl + speech_rate_c + (voicing | speaker),\n  data = eng_s\n)\n\n\nsummary(dur_lm)\n\nLinear mixed model fit by REML ['lmerMod']\nFormula: \nlog(v1_duration) ~ voicing + num_syl + voicing:num_syl + speech_rate_c +  \n    (voicing | speaker)\n   Data: eng_s\n\nREML criterion at convergence: -230\n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-3.3800 -0.5941  0.1648  0.6624  3.1393 \n\nRandom effects:\n Groups   Name          Variance  Std.Dev. Corr\n speaker  (Intercept)   0.0181967 0.13490      \n          voicingvoiced 0.0004701 0.02168  0.37\n Residual               0.0397878 0.19947      \nNumber of obs: 720, groups:  speaker, 6\n\nFixed effects:\n                          Estimate Std. Error t value\n(Intercept)                4.66722    0.05705  81.816\nvoicingvoiced              0.17276    0.02281   7.573\nnum_sylmono                0.08260    0.02308   3.579\nspeech_rate_c             -0.22902    0.02985  -7.673\nvoicingvoiced:num_sylmono  0.05501    0.02974   1.850\n\nCorrelation of Fixed Effects:\n            (Intr) vcngvc nm_syl spch__\nvoicingvocd -0.029                     \nnum_sylmono -0.163  0.417              \nspeech_rt_c  0.011 -0.006  0.412       \nvcngvcd:nm_  0.130 -0.652 -0.647 -0.006\n\n\n\nggpredict(dur_lm, c(\"voicing\", \"num_syl\"))\n\nModel has log-transformed response. Back-transforming predictions to\n  original response scale. Standard errors are still on the transformed\n  scale.\n\n\n# Predicted values of v1_duration\n\nnum_syl: di\n\nvoicing   | Predicted |         95% CI\n--------------------------------------\nvoiceless |    110.79 |  99.01, 123.96\nvoiced    |    131.68 | 116.82, 148.43\n\nnum_syl: mono\n\nvoicing   | Predicted |         95% CI\n--------------------------------------\nvoiceless |    120.33 | 107.53, 134.64\nvoiced    |    151.11 | 134.06, 170.32\n\nAdjusted for:\n* speech_rate_c = -0.18\n*       speaker = 0 (population-level)\n\n\n\ndur_lm_ext &lt;- extend(dur_lm, along = \"speaker\", n = 100)\nfixef(dur_lm_ext)[\"voicingvoiced:num_sylmono\"] &lt;- 0.03\n\nfi &lt;- \"cache/dur_lm_pow.rds\"\n\nif (file.exists(fi)) {\n  dur_lm_pow &lt;- readRDS(fi)\n} else {\n  suppressMessages(\n    dur_lm_pow &lt;- powerCurve(dur_lm_ext, fixed(\"voicing:num_syl\"), along = \"speaker\", breaks = c(50, 70, 100)) \n  )\n  saveRDS(dur_lm_pow, fi)\n}\n\n\nprint(dur_lm_pow)\n\nPower for predictor 'voicing:num_syl', (95% confidence interval),\nby number of levels in speaker:\n     50: 83.30% (80.84, 85.56) - 6000 rows\n     70: 92.90% (91.13, 94.41) - 8400 rows\n    100: 98.90% (98.04, 99.45) - 12000 rows\n\nTime elapsed: 1 h 12 m 47 s\n\nplot(dur_lm_pow)\n\n\n\n\n\n\n\n\n\nx &lt;- seq(50, 200, by = 10)\ny &lt;- x + 5\nplot(x, y/x)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "proPower",
+    "section": "",
+    "text": "This is the website of the workshop Prospective power analyses for frequentist regression models."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
   }
 ]

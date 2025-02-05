@@ -8,7 +8,8 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: slides/
+        text: Slides
 
 format:
   html:
@@ -18,5 +19,7 @@ format:
     css: styles.css
     toc: true
 
-
+execute:
+  freeze: auto
+  cache: true
 

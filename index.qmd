@@ -2,6 +2,4 @@
 title: "proPower"
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+This is the website of the workshop *Prospective power analyses for frequentist regression models*.
