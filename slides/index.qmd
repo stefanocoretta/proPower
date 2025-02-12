@@ -2,7 +2,7 @@
 title: "proPower: Prospective power analyses for frequentist regression models"
 author: "Dr Stefano Coretta"
 institute: "University of Edinburgh"
-date: "2025/01/23"
+date: "2025/03/26"
 format: 
   mono-light-revealjs:
     theme: [default, "custom.scss"]
@@ -15,14 +15,64 @@ execute:
 bibliography: references.bib
 ---
 
+## Frequentist statistics
+
+::: box-note
+-   *P*-values: $P(d|H)$, probability of the difference $d$ (or a more extreme one) given the hypothesis $H$.
+
+-   Neyman-Pearson NHST:
+
+    -   $H$ is the "null hypothesis", to be rejected.
+
+    -   $\alpha$ level: $p \ge \alpha$ non-significant difference, $p < \alpha$ significant difference.
+
+    -   $\beta$ level: statistical power, probability of detecting a significant difference when there is one.
+
+-   Null Ritual [@gigerenzer2004; @gigerenzer2004a; @gigerenzer2018]:
+
+    -   $H$ is a "nil hypothesis": $d = 0$, to be rejected.
+
+    -   $\alpha = 0.05$
+
+    -   $\beta = 0.8$
+:::
+
+## Statistical power
+
+::: box-tip
+-   Statistical power ($\beta$ level) is affected by sample size.
+
+-   One must determine the sample size needed to achieve the desired statistical power. In Null Ritualistic statistics this is 0.8 (or 80% power).
+
+-   Prospective power analysis.
+:::
+
+. . .
+
+::: box-note
+Two examples
+
+-   Effect of consonant voicing on vowel duration in mono- vs disyllabic words.
+
+-   Accuracy in a lexical decision task to investigate shallow morphological representation in L2 speakers.
+:::
+
 ## Example 1: vowel duration
 
 ::: box-note
 -   Data from @coretta2019f, @coretta2019i.
 
--   Voicing effect in Manchester English.
+-   "Voicing effect" in Manchester English.
 
--   Mono- and di-syllabic nonce words.
+-   Mono- and di-syllabic nonce words in frame sentences.
+
+-   Is the voicing effect the same or different in mono- vs disyllabic words?
+:::
+
+. . .
+
+::: box-tip
+-   Use "pilot" data to determine sample size.
 :::
 
 ## Example 1: the data
@@ -42,7 +92,7 @@ library(simr)
 library(tidyverse)
 
 eng_s <- readRDS("data/eng_s.rds")
-eng_s |> select(speaker, num_syl, voicing, v1_duration, speech_rate_c)
+eng_s |> select(speaker, num_syl, word, voicing, v1_duration, speech_rate_c)
 ```
 
 ## Effect of voicing on vowel duration

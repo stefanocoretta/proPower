@@ -18,14 +18,14 @@
     "href": "slides/index.html#example-1-vowel-duration",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Example 1: vowel duration",
-    "text": "Example 1: vowel duration\n\n\nData from Coretta (2019b), Coretta (2019a).\nVoicing effect in Manchester English.\nMono- and di-syllabic nonce words."
+    "text": "Example 1: vowel duration\n\n\nData from Coretta (2019b), Coretta (2019a).\n“Voicing effect” in Manchester English.\nMono- and di-syllabic nonce words in frame sentences.\nIs the voicing effect the same or different in mono- vs disyllabic words?\n\n\n\n\n\nUse “pilot” data to determine sample size."
   },
   {
     "objectID": "slides/index.html#example-1-the-data",
     "href": "slides/index.html#example-1-the-data",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Example 1: the data",
-    "text": "Example 1: the data\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 5\n   speaker num_syl voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      voiced          117.         -0.650\n 2 en02    mono    voiceless        95.0        -0.908\n 3 en02    mono    voiceless       106.         -0.900\n 4 en02    di      voiced          190.         -0.750\n 5 en02    di      voiced          195.         -0.383\n 6 en02    di      voiceless       113.         -0.655\n 7 en02    mono    voiced          203.         -0.823\n 8 en02    mono    voiceless       217.         -0.534\n 9 en02    di      voiced          120.         -0.571\n10 en02    di      voiceless       147.         -0.665\n# ℹ 710 more rows"
+    "text": "Example 1: the data\n\nlibrary(tidyverse)\n\neng_s &lt;- readRDS(\"data/eng_s.rds\")\neng_s |&gt; select(speaker, num_syl, word, voicing, v1_duration, speech_rate_c)\n\n# A tibble: 720 × 6\n   speaker num_syl word   voicing   v1_duration speech_rate_c\n   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;\n 1 en02    di      teegus voiced          117.         -0.650\n 2 en02    mono    teek   voiceless        95.0        -0.908\n 3 en02    mono    teek   voiceless       106.         -0.900\n 4 en02    di      tergus voiced          190.         -0.750\n 5 en02    di      targus voiced          195.         -0.383\n 6 en02    di      teepus voiceless       113.         -0.655\n 7 en02    mono    terb   voiced          203.         -0.823\n 8 en02    mono    tarp   voiceless       217.         -0.534\n 9 en02    di      teegus voiced          120.         -0.571\n10 en02    di      terpus voiceless       147.         -0.665\n# ℹ 710 more rows"
   },
   {
     "objectID": "slides/index.html#effect-of-voicing-on-vowel-duration",
@@ -144,7 +144,7 @@
     "href": "slides/index.html#references",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "References",
-    "text": "References\n\n\nAllen, George D. 1978. “Vowel Duration Measurement: A Reliability Study.” The Journal of the Acoustical Society of America 63 (4): 11761185. https://doi.org/10.1121/1.381826.\n\n\nCoretta, Stefano. 2019a. “Compensatory Aspects of the Effect of Voicing on Vowel Duration in English [Data V1.0.0].” https://doi.org/10.17605/OSF.IO/EP8WB.\n\n\n———. 2019b. “Temporal (in)stability in English Monosyllabic and Disyllabic Words: Insights on the Effect of Voicing on Vowel Duration.” https://doi.org/10.31219/osf.io/jvwa8.\n\n\nNowak, Pawel. 2006. “Vowel Reduction in Polish.” PhD thesis.\n\n\nSong, Yoonsang, Youngah Do, Arthur L. Thompson, Eileen R. Waegemaekers, and Jongbong Lee. 2020. “Second Language Users Exhibit Shallow Morphological Processing.” Studies in Second Language Acquisition 42 (5): 1121–36. https://doi.org/10.1017/s0272263120000170."
+    "text": "References\n\n\nAllen, George D. 1978. “Vowel Duration Measurement: A Reliability Study.” The Journal of the Acoustical Society of America 63 (4): 11761185. https://doi.org/10.1121/1.381826.\n\n\nCoretta, Stefano. 2019a. “Compensatory Aspects of the Effect of Voicing on Vowel Duration in English [Data V1.0.0].” https://doi.org/10.17605/OSF.IO/EP8WB.\n\n\n———. 2019b. “Temporal (in)stability in English Monosyllabic and Disyllabic Words: Insights on the Effect of Voicing on Vowel Duration.” https://doi.org/10.31219/osf.io/jvwa8.\n\n\nGigerenzer, Gerd. 2004. “Mindless Statistics.” The Journal of Socio-Economics 33 (5): 587606. https://doi.org/10.1016/j.socec.2004.09.033.\n\n\n———. 2018. “Statistical Rituals: The Replication Delusion and How We Got There.” Advances in Methods and Practices in Psychological Science 1 (2): 198218. https://doi.org/10.1177/2515245918771329.\n\n\nGigerenzer, Gerd, Stefan Krauss, and Oliver Vitouch. 2004. “The Null Ritual. What You Always Wanted to Know about Significance Testing but Were Afraid to Ask.” In, 391408.\n\n\nNowak, Pawel. 2006. “Vowel Reduction in Polish.” PhD thesis.\n\n\nSong, Yoonsang, Youngah Do, Arthur L. Thompson, Eileen R. Waegemaekers, and Jongbong Lee. 2020. “Second Language Users Exhibit Shallow Morphological Processing.” Studies in Second Language Acquisition 42 (5): 1121–36. https://doi.org/10.1017/s0272263120000170."
   },
   {
     "objectID": "code/02-accuracy.html",
@@ -173,5 +173,26 @@
     "title": "About",
     "section": "",
     "text": "About this site"
+  },
+  {
+    "objectID": "slides/index.html#frequentist-regression-models-and-power",
+    "href": "slides/index.html#frequentist-regression-models-and-power",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Frequentist regression models and power",
+    "text": "Frequentist regression models and power\n\n\nP-values: \\(P(d|H)\\), probability of the difference \\(d\\) (or a more extreme one) given the hypothesis \\(H\\).\nNeyman-Pearson NHST:\n\n\\(H\\) is the “null hypothesis”, to be rejected.\n\\(\\alpha\\) level: \\(p \\ge \\alpha\\) non-significant difference, \\(p &lt; \\alpha\\) significant difference.\n\\(\\beta\\) level: probability of detecting a significant difference when there is one.\n\nNull Ritual (Gigerenzer 2004, 2018; Gigerenzer, Krauss, and Vitouch 2004):\n\n\\(H\\) is a “nil hypothesis”: \\(d = 0\\), to be rejected.\n\\(\\alpha = 0.05\\)\n\\(\\beta = 0.08\\)"
+  },
+  {
+    "objectID": "slides/index.html#frequentist-statistics",
+    "href": "slides/index.html#frequentist-statistics",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Frequentist statistics",
+    "text": "Frequentist statistics\n\n\nP-values: \\(P(d|H)\\), probability of the difference \\(d\\) (or a more extreme one) given the hypothesis \\(H\\).\nNeyman-Pearson NHST:\n\n\\(H\\) is the “null hypothesis”, to be rejected.\n\\(\\alpha\\) level: \\(p \\ge \\alpha\\) non-significant difference, \\(p &lt; \\alpha\\) significant difference.\n\\(\\beta\\) level: statistical power, probability of detecting a significant difference when there is one.\n\nNull Ritual (Gigerenzer 2004, 2018; Gigerenzer, Krauss, and Vitouch 2004):\n\n\\(H\\) is a “nil hypothesis”: \\(d = 0\\), to be rejected.\n\\(\\alpha = 0.05\\)\n\\(\\beta = 0.8\\)"
+  },
+  {
+    "objectID": "slides/index.html#statistical-power",
+    "href": "slides/index.html#statistical-power",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Statistical power",
+    "text": "Statistical power\n\n\nStatistical power (\\(\\beta\\) level) is affected by sample size.\nOne must determine the sample size needed to achieve the desired statistical power. In Null Ritualistic statistics this is 0.8 (or 80% power).\nProspective power analysis.\n\n\n\n\nTwo examples\n\nEffect of consonant voicing on vowel duration in mono- vs disyllabic words.\nAccuracy in a lexical decision task to investigate shallow morphological representation in L2 speakers."
   }
 ]

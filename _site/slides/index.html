@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.6.40">
 
   <meta name="author" content="Dr Stefano Coretta">
-  <meta name="dcterms.date" content="2025-01-23">
+  <meta name="dcterms.date" content="2025-03-26">
   <title>proPower – proPower: Prospective power analyses for frequentist regression models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -227,16 +227,63 @@ Dr Stefano Coretta
     </div>
 </div>
 
-  <p class="date">2025-01-23</p>
+  <p class="date">2025-03-26</p>
+</section>
+<section id="frequentist-statistics" class="slide level2">
+<h2>Frequentist statistics</h2>
+<div class="box-note">
+<ul>
+<li><p><em>P</em>-values: <span class="math inline">\(P(d|H)\)</span>, probability of the difference <span class="math inline">\(d\)</span> (or a more extreme one) given the hypothesis <span class="math inline">\(H\)</span>.</p></li>
+<li><p>Neyman-Pearson NHST:</p>
+<ul>
+<li><p><span class="math inline">\(H\)</span> is the “null hypothesis”, to be rejected.</p></li>
+<li><p><span class="math inline">\(\alpha\)</span> level: <span class="math inline">\(p \ge \alpha\)</span> non-significant difference, <span class="math inline">\(p &lt; \alpha\)</span> significant difference.</p></li>
+<li><p><span class="math inline">\(\beta\)</span> level: statistical power, probability of detecting a significant difference when there is one.</p></li>
+</ul></li>
+<li><p>Null Ritual <span class="citation" data-cites="gigerenzer2004 gigerenzer2004a gigerenzer2018">(<a href="#/references" role="doc-biblioref" onclick="">Gigerenzer 2004</a>, <a href="#/references" role="doc-biblioref" onclick="">2018</a>; <a href="#/references" role="doc-biblioref" onclick="">Gigerenzer, Krauss, and Vitouch 2004</a>)</span>:</p>
+<ul>
+<li><p><span class="math inline">\(H\)</span> is a “nil hypothesis”: <span class="math inline">\(d = 0\)</span>, to be rejected.</p></li>
+<li><p><span class="math inline">\(\alpha = 0.05\)</span></p></li>
+<li><p><span class="math inline">\(\beta = 0.8\)</span></p></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="statistical-power" class="slide level2">
+<h2>Statistical power</h2>
+<div class="box-tip">
+<ul>
+<li><p>Statistical power (<span class="math inline">\(\beta\)</span> level) is affected by sample size.</p></li>
+<li><p>One must determine the sample size needed to achieve the desired statistical power. In Null Ritualistic statistics this is 0.8 (or 80% power).</p></li>
+<li><p>Prospective power analysis.</p></li>
+</ul>
+</div>
+<div class="fragment">
+<div class="box-note">
+<p>Two examples</p>
+<ul>
+<li><p>Effect of consonant voicing on vowel duration in mono- vs disyllabic words.</p></li>
+<li><p>Accuracy in a lexical decision task to investigate shallow morphological representation in L2 speakers.</p></li>
+</ul>
+</div>
+</div>
 </section>
 <section id="example-1-vowel-duration" class="slide level2">
 <h2>Example 1: vowel duration</h2>
 <div class="box-note">
 <ul>
 <li><p>Data from <span class="citation" data-cites="coretta2019f">Coretta (<a href="#/references" role="doc-biblioref" onclick="">2019b</a>)</span>, <span class="citation" data-cites="coretta2019i">Coretta (<a href="#/references" role="doc-biblioref" onclick="">2019a</a>)</span>.</p></li>
-<li><p>Voicing effect in Manchester English.</p></li>
-<li><p>Mono- and di-syllabic nonce words.</p></li>
+<li><p>“Voicing effect” in Manchester English.</p></li>
+<li><p>Mono- and di-syllabic nonce words in frame sentences.</p></li>
+<li><p>Is the voicing effect the same or different in mono- vs disyllabic words?</p></li>
 </ul>
+</div>
+<div class="fragment">
+<div class="box-tip">
+<ul>
+<li>Use “pilot” data to determine sample size.</li>
+</ul>
+</div>
 </div>
 </section>
 <section id="example-1-the-data" class="slide level2">
@@ -245,21 +292,21 @@ Dr Stefano Coretta
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a></a></span>
 <span id="cb1-3"><a></a>eng_s <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"data/eng_s.rds"</span>)</span>
-<span id="cb1-4"><a></a>eng_s <span class="sc">|&gt;</span> <span class="fu">select</span>(speaker, num_syl, voicing, v1_duration, speech_rate_c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a></a>eng_s <span class="sc">|&gt;</span> <span class="fu">select</span>(speaker, num_syl, word, voicing, v1_duration, speech_rate_c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 720 × 5
-   speaker num_syl voicing   v1_duration speech_rate_c
-   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
- 1 en02    di      voiced          117.         -0.650
- 2 en02    mono    voiceless        95.0        -0.908
- 3 en02    mono    voiceless       106.         -0.900
- 4 en02    di      voiced          190.         -0.750
- 5 en02    di      voiced          195.         -0.383
- 6 en02    di      voiceless       113.         -0.655
- 7 en02    mono    voiced          203.         -0.823
- 8 en02    mono    voiceless       217.         -0.534
- 9 en02    di      voiced          120.         -0.571
-10 en02    di      voiceless       147.         -0.665
+<pre><code># A tibble: 720 × 6
+   speaker num_syl word   voicing   v1_duration speech_rate_c
+   &lt;fct&gt;   &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;
+ 1 en02    di      teegus voiced          117.         -0.650
+ 2 en02    mono    teek   voiceless        95.0        -0.908
+ 3 en02    mono    teek   voiceless       106.         -0.900
+ 4 en02    di      tergus voiced          190.         -0.750
+ 5 en02    di      targus voiced          195.         -0.383
+ 6 en02    di      teepus voiceless       113.         -0.655
+ 7 en02    mono    terb   voiced          203.         -0.823
+ 8 en02    mono    tarp   voiceless       217.         -0.534
+ 9 en02    di      teegus voiced          120.         -0.571
+10 en02    di      terpus voiceless       147.         -0.665
 # ℹ 710 more rows</code></pre>
 </div>
 </div>
@@ -509,6 +556,15 @@ Coretta, Stefano. 2019a. <span>“Compensatory Aspects of the Effect of Voicing 
 </div>
 <div id="ref-coretta2019f" class="csl-entry" role="listitem">
 ———. 2019b. <span>“Temporal (in)stability in English Monosyllabic and Disyllabic Words: Insights on the Effect of Voicing on Vowel Duration.”</span> <a href="https://doi.org/10.31219/osf.io/jvwa8">https://doi.org/10.31219/osf.io/jvwa8</a>.
+</div>
+<div id="ref-gigerenzer2004" class="csl-entry" role="listitem">
+Gigerenzer, Gerd. 2004. <span>“Mindless Statistics.”</span> <em>The Journal of Socio-Economics</em> 33 (5): 587606. <a href="https://doi.org/10.1016/j.socec.2004.09.033">https://doi.org/10.1016/j.socec.2004.09.033</a>.
+</div>
+<div id="ref-gigerenzer2018" class="csl-entry" role="listitem">
+———. 2018. <span>“Statistical Rituals: The Replication Delusion and How We Got There.”</span> <em>Advances in Methods and Practices in Psychological Science</em> 1 (2): 198218. <a href="https://doi.org/10.1177/2515245918771329">https://doi.org/10.1177/2515245918771329</a>.
+</div>
+<div id="ref-gigerenzer2004a" class="csl-entry" role="listitem">
+Gigerenzer, Gerd, Stefan Krauss, and Oliver Vitouch. 2004. <span>“The Null Ritual. What You Always Wanted to Know about Signi<span>fi</span>cance Testing but Were Afraid to Ask.”</span> In, 391408.
 </div>
 <div id="ref-nowak2006" class="csl-entry" role="listitem">
 Nowak, Pawel. 2006. <span>“Vowel Reduction in Polish.”</span> PhD thesis.
