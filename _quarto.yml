@@ -5,6 +5,9 @@ project:
 website:
   title: "proPower"
   navbar:
+    tools:
+      - icon: github
+        href: "https://github.com/stefanocoretta/proPower"
     left:
       - href: index.qmd
         text: Home
@@ -14,12 +17,10 @@ website:
 format:
   html:
     theme:
-      - cosmo
-      - brand
+      - flatly
     css: styles.css
     toc: true
 
 execute:
   freeze: auto
-  cache: true
 

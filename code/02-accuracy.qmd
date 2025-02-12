@@ -33,14 +33,24 @@ unique(shallow_s$ID)
 sha_lm <- glmer(
   ACC ~ Relation_type + (Relation_type | ID),
   family = binomial,
-  data = shallow_l2
+  data = shallow_s
 )
 
 summary(sha_lm)
 ```
 
 ```{r}
-sha_lm_ext <- extend(sha_lm, along = "ID", n = 300)
+sha_lm_2 <- glmer(
+  ACC ~ Relation_type + (1 | ID),
+  family = binomial,
+  data = shallow_s
+)
+
+summary(sha_lm_2)
+```
+
+```{r}
+sha_lm_ext <- extend(sha_lm_2, along = "ID", n = 1000)
 fixef(sha_lm_ext)["Relation_typeNonConstituent"] <- -0.2
 
 fi <- "cache/sha_lm_pow.rds"
@@ -51,6 +61,8 @@ if (file.exists(fi)) {
   suppressMessages(
     sha_lm_pow <- powerCurve(sha_lm_ext, fixed("Relation_typeNonConstituent"), along = "ID")
   )
+  # The following is needed in this case probably because of a bug in powerCurve()
+  sha_lm_pow[["xval"]] <- sha_lm_pow[["nlevels"]]
   saveRDS(sha_lm_pow, fi)
 }
 ```
@@ -60,22 +72,7 @@ print(sha_lm_pow)
 ```
 
 ```{r}
-sha_lm_ext_2 <- extend(sha_lm, along = "ID", n = 1000)
-fixef(sha_lm_ext_2)["Relation_typeNonConstituent"] <- -0.2
-
-fi <- "cache/sha_lm_pow_2.rds"
-
-if (file.exists(fi)) {
-  sha_lm_pow_2 <- readRDS(fi)
-} else {
-  suppressMessages(
-    sha_lm_pow_2 <- powerSim(sha_lm_ext_2, fixed("Relation_typeNonConstituent"))
-  )
-  saveRDS(sha_lm_pow_2, fi)
-}
+plot(sha_lm_pow)
 ```
 
-```{r}
-print(sha_lm_pow_2)
-```
 

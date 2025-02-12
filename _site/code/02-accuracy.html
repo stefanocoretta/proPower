@@ -134,6 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
+    <a href="https://github.com/stefanocoretta/proPower" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -245,107 +246,135 @@ dbl (3): ACC, RT, logRT
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sha_lm <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  ACC <span class="sc">~</span> Relation_type <span class="sc">+</span> (Relation_type <span class="sc">|</span> ID),</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> shallow_l2</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sha_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> shallow_s</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
+Model failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sha_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
   Approximation) [glmerMod]
  Family: binomial  ( logit )
 Formula: ACC ~ Relation_type + (Relation_type | ID)
-   Data: shallow_l2
+   Data: shallow_s
 
      AIC      BIC   logLik deviance df.resid 
-   736.5    776.8   -359.3    718.5      639 
+   243.9    272.7   -113.0    225.9      171 
 
 Scaled residuals: 
     Min      1Q  Median      3Q     Max 
--2.7847 -0.9242  0.4295  0.6211  1.3398 
+-1.8220 -1.1732  0.5994  0.7376  0.9667 
 
 Random effects:
  Groups Name                        Variance Std.Dev. Corr       
- ID     (Intercept)                 0.79532  0.8918              
-        Relation_typeNonConstituent 0.03407  0.1846    1.00      
-        Relation_typeUnrelated      0.14092  0.3754   -1.00 -1.00
-Number of obs: 648, groups:  ID, 36
+ ID     (Intercept)                 0.5606   0.7487              
+        Relation_typeNonConstituent 0.1617   0.4022   -1.00      
+        Relation_typeUnrelated      0.2396   0.4895   -1.00  1.00
+Number of obs: 180, groups:  ID, 10
 
 Fixed effects:
-                            Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)                  1.42605    0.24311   5.866 4.47e-09 ***
-Relation_typeNonConstituent -0.09972    0.27212  -0.366  0.71403    
-Relation_typeUnrelated      -0.68990    0.25174  -2.740  0.00613 ** 
+                              Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept)                  0.8699404  0.3904283   2.228   0.0259 *
+Relation_typeNonConstituent  0.0008542  0.4401554   0.002   0.9985  
+Relation_typeUnrelated      -0.3867280  0.4379963  -0.883   0.3773  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Correlation of Fixed Effects:
             (Intr) Rlt_NC
-Rltn_typNnC -0.479       
-Rltn_typUnr -0.756  0.501</code></pre>
+Rltn_typNnC -0.730       
+Rltn_typUnr -0.777  0.596
+optimizer (Nelder_Mead) convergence code: 0 (OK)
+Model failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sha_lm_ext <span class="ot">&lt;-</span> <span class="fu">extend</span>(sha_lm, <span class="at">along =</span> <span class="st">"ID"</span>, <span class="at">n =</span> <span class="dv">300</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(sha_lm_ext)[<span class="st">"Relation_typeNonConstituent"</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fi <span class="ot">&lt;-</span> <span class="st">"cache/sha_lm_pow.rds"</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fi)) {</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  sha_lm_pow <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fi)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    sha_lm_pow <span class="ot">&lt;-</span> <span class="fu">powerCurve</span>(sha_lm_ext, <span class="fu">fixed</span>(<span class="st">"Relation_typeNonConstituent"</span>), <span class="at">along =</span> <span class="st">"ID"</span>)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(sha_lm_pow, fi)</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sha_lm_2 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  ACC <span class="sc">~</span> Relation_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> shallow_s</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sha_lm_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: ACC ~ Relation_type + (1 | ID)
+   Data: shallow_s
+
+     AIC      BIC   logLik deviance df.resid 
+   235.1    247.8   -113.5    227.1      176 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.7702 -1.2415  0.6161  0.7087  0.9373 
+
+Random effects:
+ Groups Name        Variance Std.Dev.
+ ID     (Intercept) 0.14     0.3742  
+Number of obs: 180, groups:  ID, 10
+
+Fixed effects:
+                            Estimate Std. Error z value Pr(&gt;|z|)   
+(Intercept)                  0.79468    0.30687   2.590  0.00961 **
+Relation_typeNonConstituent  0.08048    0.40084   0.201  0.84086   
+Relation_typeUnrelated      -0.30295    0.38990  -0.777  0.43716   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Correlation of Fixed Effects:
+            (Intr) Rlt_NC
+Rltn_typNnC -0.643       
+Rltn_typUnr -0.665  0.506</code></pre>
+</div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sha_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sha_lm_ext <span class="ot">&lt;-</span> <span class="fu">extend</span>(sha_lm_2, <span class="at">along =</span> <span class="st">"ID"</span>, <span class="at">n =</span> <span class="dv">1000</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(sha_lm_ext)[<span class="st">"Relation_typeNonConstituent"</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fi <span class="ot">&lt;-</span> <span class="st">"cache/sha_lm_pow.rds"</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fi)) {</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  sha_lm_pow <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fi)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    sha_lm_pow <span class="ot">&lt;-</span> <span class="fu">powerCurve</span>(sha_lm_ext, <span class="fu">fixed</span>(<span class="st">"Relation_typeNonConstituent"</span>), <span class="at">along =</span> <span class="st">"ID"</span>)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The following is needed in this case probably because of a bug in powerCurve()</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  sha_lm_pow[[<span class="st">"xval"</span>]] <span class="ot">&lt;-</span> sha_lm_pow[[<span class="st">"nlevels"</span>]]</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(sha_lm_pow, fi)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sha_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Power for predictor 'Relation_typeNonConstituent', (95% confidence interval),
 by largest value of ID:
-    100:  4.80% ( 3.56,  6.31) - 54 rows
-    130: 12.10% (10.14, 14.28) - 648 rows
-    160: 21.30% (18.80, 23.97) - 1242 rows
-    190: 24.80% (22.15, 27.60) - 1836 rows
-     22: 30.80% (27.95, 33.76) - 2430 rows
-     25: 37.30% (34.29, 40.38) - 3024 rows
-     28: 40.20% (37.14, 43.31) - 3618 rows
-     39: 44.80% (41.69, 47.94) - 4212 rows
-     69: 50.40% (47.25, 53.54) - 4806 rows
-     99: 53.30% (50.15, 56.43) - 5400 rows
+      3:  5.00% ( 3.73,  6.54) - 54 rows
+    114: 37.50% (34.49, 40.58) - 2052 rows
+    225: 67.60% (64.60, 70.50) - 4050 rows
+    335: 83.30% (80.84, 85.56) - 6030 rows
+    446: 92.40% (90.58, 93.97) - 8028 rows
+    557: 95.70% (94.25, 96.87) - 10026 rows
+    668: 98.30% (97.29, 99.01) - 12024 rows
+    778: 99.20% (98.43, 99.65) - 14004 rows
+    889: 99.70% (99.13, 99.94) - 16002 rows
+   1000: 100.0% (99.63, 100.0) - 18000 rows
 
-Time elapsed: 6 h 7 m 11 s</code></pre>
+Time elapsed: 1 h 29 m 48 s</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sha_lm_ext_2 <span class="ot">&lt;-</span> <span class="fu">extend</span>(sha_lm, <span class="at">along =</span> <span class="st">"ID"</span>, <span class="at">n =</span> <span class="dv">1000</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(sha_lm_ext_2)[<span class="st">"Relation_typeNonConstituent"</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>fi <span class="ot">&lt;-</span> <span class="st">"cache/sha_lm_pow_2.rds"</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fi)) {</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  sha_lm_pow_2 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fi)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    sha_lm_pow_2 <span class="ot">&lt;-</span> <span class="fu">powerSim</span>(sha_lm_ext_2, <span class="fu">fixed</span>(<span class="st">"Relation_typeNonConstituent"</span>))</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(sha_lm_pow_2, fi)</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sha_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="02-accuracy_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sha_lm_pow_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Power for predictor 'Relation_typeNonConstituent', (95% confidence interval):
-      97.00% (95.74, 97.97)
-
-Test: z-test
-      Effect size for Relation_typeNonConstituent is -0.20
-
-Based on 1000 simulations, (768 warnings, 0 errors)
-alpha = 0.05, nrow = 18000
-
-Time elapsed: 4 h 31 m 3 s</code></pre>
 </div>
 </div>
 

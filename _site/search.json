@@ -14,6 +14,20 @@
     "text": "Group\n\nParticipant group (L1, L2).\n\nID\n\nSubject unique identifier.\n\nList\n\nWord list.\n\nTarget\n\nTarget word.\n\nRT\n\nReaction time (ms).\n\nRT_log\n\nLogged reaction time.\n\nCritical_Filler\n\nWhether the trial is a critical or a filler trial.\n\nWord_Nonword\n\nWhether the word is a real word or a nonce word (only word is present in the data).\n\nRelation_type\n\nWhether the relation type is Unrelated, Constituent, or NonConstituent.\n\nBranching\n\nWhether the trial word is Left-branching or Right-branching."
   },
   {
+    "objectID": "slides/index.html#frequentist-statistics",
+    "href": "slides/index.html#frequentist-statistics",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Frequentist statistics",
+    "text": "Frequentist statistics\n\n\nP-values: \\(P(d|H)\\), probability of the difference \\(d\\) (or a more extreme one) given the hypothesis \\(H\\).\nNeyman-Pearson NHST:\n\n\\(H\\) is the “null hypothesis”, to be rejected.\n\\(\\alpha\\) level: \\(p \\ge \\alpha\\) non-significant difference, \\(p &lt; \\alpha\\) significant difference.\n\\(\\beta\\) level: statistical power, probability of detecting a significant difference when there is one.\n\nNull Ritual (Gigerenzer 2004, 2018; Gigerenzer, Krauss, and Vitouch 2004):\n\n\\(H\\) is a “nil hypothesis”: \\(d = 0\\), to be rejected.\n\\(\\alpha = 0.05\\)\n\\(\\beta = 0.8\\)"
+  },
+  {
+    "objectID": "slides/index.html#statistical-power",
+    "href": "slides/index.html#statistical-power",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Statistical power",
+    "text": "Statistical power\n\n\nStatistical power (\\(\\beta\\) level) is affected by sample size.\nOne must determine the sample size needed to achieve the desired statistical power. In Null Ritualistic statistics this is 0.8 (or 80% power).\nProspective power analysis.\n\n\n\n\nTwo examples\n\nEffect of consonant voicing on vowel duration in mono- vs disyllabic words.\nAccuracy in a lexical decision task to investigate shallow morphological representation in L2 speakers."
+  },
+  {
     "objectID": "slides/index.html#example-1-vowel-duration",
     "href": "slides/index.html#example-1-vowel-duration",
     "title": "proPower: Prospective power analyses for frequentist regression models",
@@ -46,28 +60,28 @@
     "href": "slides/index.html#smallest-meaningful-effect-size",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Smallest Meaningful Effect Size",
-    "text": "Smallest Meaningful Effect Size\n\n\nThe minimum standard deviation for measurements of vowel duration is between 2 to 5 ms (Allen 1978).\nNowak (2006) finds an effect of voicing of 4.5 ms.\nLet’s set the SMES to 5 ms."
+    "text": "Smallest Meaningful Effect Size\n\n\nThe minimum standard deviation for measurements of vowel duration is between 2 to 5 ms (Allen 1978).\nNowak (2006) finds an effect of voicing of 4.5 ms.\nLet’s use an SMES of 5 ms. What does this correspond to as a difference ratio?"
   },
   {
     "objectID": "slides/index.html#smallest-meaningful-effect-size-ratios",
     "href": "slides/index.html#smallest-meaningful-effect-size-ratios",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Smallest Meaningful Effect Size (ratios)",
-    "text": "Smallest Meaningful Effect Size (ratios)"
+    "text": "Smallest Meaningful Effect Size (ratios)\n\n\nx &lt;- seq(50, 300, by = 10)\ny &lt;- x + 5\n\nggplot() +\n  aes(x, y/x) +\n  geom_point(size = 2) +\n  labs(\n    x = \"Vowel duration\",\n    y = \"Difference ratio\"\n  )"
   },
   {
     "objectID": "slides/index.html#run-regression-model",
     "href": "slides/index.html#run-regression-model",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Run regression model",
-    "text": "Run regression model\n\ndur_lm &lt;- lmer(\n  log(v1_duration) ~\n    voicing + num_syl + voicing:num_syl + speech_rate_c +\n    (voicing | speaker),\n  data = eng_s\n)"
+    "text": "Run regression model\n\ndur_lm &lt;- lmer(\n  log(v1_duration) ~\n    voicing + num_syl + voicing:num_syl + speech_rate_c +\n    (voicing | speaker),\n  data = eng_s\n)\n\nsummary(dur_lm)\n\nLinear mixed model fit by REML ['lmerMod']\nFormula: \nlog(v1_duration) ~ voicing + num_syl + voicing:num_syl + speech_rate_c +  \n    (voicing | speaker)\n   Data: eng_s\n\nREML criterion at convergence: -230\n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-3.3800 -0.5941  0.1648  0.6624  3.1393 \n\nRandom effects:\n Groups   Name          Variance  Std.Dev. Corr\n speaker  (Intercept)   0.0181967 0.13490      \n          voicingvoiced 0.0004701 0.02168  0.37\n Residual               0.0397878 0.19947      \nNumber of obs: 720, groups:  speaker, 6\n\nFixed effects:\n                          Estimate Std. Error t value\n(Intercept)                4.66722    0.05705  81.816\nvoicingvoiced              0.17276    0.02281   7.573\nnum_sylmono                0.08260    0.02308   3.579\nspeech_rate_c             -0.22902    0.02985  -7.673\nvoicingvoiced:num_sylmono  0.05501    0.02974   1.850\n\nCorrelation of Fixed Effects:\n            (Intr) vcngvc nm_syl spch__\nvoicingvocd -0.029                     \nnum_sylmono -0.163  0.417              \nspeech_rt_c  0.011 -0.006  0.412       \nvcngvcd:nm_  0.130 -0.652 -0.647 -0.006"
   },
   {
     "objectID": "slides/index.html#extend-model-and-set-smes",
     "href": "slides/index.html#extend-model-and-set-smes",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Extend model and set SMES",
-    "text": "Extend model and set SMES\n\ndur_lm_ext &lt;- extend(dur_lm, along = \"speaker\", n = 20)\n\nfixef(dur_lm_ext)[\"voicingvoiced:num_sylmono\"] &lt;- 0.03"
+    "text": "Extend model and set SMES\n\ndur_lm_ext &lt;- extend(dur_lm, along = \"speaker\", n = 20)\n\nfixef(dur_lm_ext)[\"voicingvoiced:num_sylmono\"] &lt;- 0.03\nfixef(dur_lm_ext)\n\n              (Intercept)             voicingvoiced               num_sylmono \n               4.66722417                0.17276388                0.08260109 \n            speech_rate_c voicingvoiced:num_sylmono \n              -0.22902490                0.03000000"
   },
   {
     "objectID": "slides/index.html#run-power-analysis",
@@ -81,7 +95,7 @@
     "href": "slides/index.html#power-curve-plot",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Power curve plot",
-    "text": "Power curve plot"
+    "text": "Power curve plot\n\nplot(dur_lm_pow)"
   },
   {
     "objectID": "slides/index.html#example-2-accuracy",
@@ -105,18 +119,18 @@
     "text": "Accuracy by relation type"
   },
   {
-    "objectID": "slides/index.html#smallest-meaningful-effect-size-1",
-    "href": "slides/index.html#smallest-meaningful-effect-size-1",
+    "objectID": "slides/index.html#smallest-meaningful-effect-size-log-odds",
+    "href": "slides/index.html#smallest-meaningful-effect-size-log-odds",
     "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Smallest Meaningful Effect Size",
-    "text": "Smallest Meaningful Effect Size\n\n\nI have no idea…\nSay -0.2 (log-odds)."
+    "section": "Smallest Meaningful Effect Size (log-odds)",
+    "text": "Smallest Meaningful Effect Size (log-odds)\n\n\nI have no idea…\nSay -0.2 (log-odds)."
   },
   {
-    "objectID": "slides/index.html#smallest-meaningfull-effect-size",
-    "href": "slides/index.html#smallest-meaningfull-effect-size",
+    "objectID": "slides/index.html#smallest-meaningful-effect-size-probability",
+    "href": "slides/index.html#smallest-meaningful-effect-size-probability",
     "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Smallest Meaningfull Effect Size",
-    "text": "Smallest Meaningfull Effect Size"
+    "section": "Smallest Meaningful Effect Size (probability)",
+    "text": "Smallest Meaningful Effect Size (probability)"
   },
   {
     "objectID": "slides/index.html#run-regression-model-1",
@@ -126,18 +140,32 @@
     "text": "Run regression model\n\nsha_lm &lt;- glmer(\n  ACC ~ Relation_type + (Relation_type | ID),\n  family = binomial,\n  data = shallow_s\n)\n\nsummary(sha_lm)\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: ACC ~ Relation_type + (Relation_type | ID)\n   Data: shallow_s\n\n     AIC      BIC   logLik deviance df.resid \n   243.9    272.7   -113.0    225.9      171 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-1.8220 -1.1732  0.5994  0.7376  0.9667 \n\nRandom effects:\n Groups Name                        Variance Std.Dev. Corr       \n ID     (Intercept)                 0.5606   0.7487              \n        Relation_typeNonConstituent 0.1617   0.4022   -1.00      \n        Relation_typeUnrelated      0.2396   0.4895   -1.00  1.00\nNumber of obs: 180, groups:  ID, 10\n\nFixed effects:\n                              Estimate Std. Error z value Pr(&gt;|z|)  \n(Intercept)                  0.8699404  0.3904283   2.228   0.0259 *\nRelation_typeNonConstituent  0.0008542  0.4401554   0.002   0.9985  \nRelation_typeUnrelated      -0.3867280  0.4379963  -0.883   0.3773  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) Rlt_NC\nRltn_typNnC -0.730       \nRltn_typUnr -0.777  0.596\noptimizer (Nelder_Mead) convergence code: 0 (OK)\nModel failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)"
   },
   {
+    "objectID": "slides/index.html#run-regression-model-ii",
+    "href": "slides/index.html#run-regression-model-ii",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Run regression model II",
+    "text": "Run regression model II\n\nsha_lm_2 &lt;- glmer(\n  ACC ~ Relation_type + (1 | ID),\n  family = binomial,\n  data = shallow_s\n)\n\nsummary(sha_lm_2)\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: ACC ~ Relation_type + (1 | ID)\n   Data: shallow_s\n\n     AIC      BIC   logLik deviance df.resid \n   235.1    247.8   -113.5    227.1      176 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-1.7702 -1.2415  0.6161  0.7087  0.9373 \n\nRandom effects:\n Groups Name        Variance Std.Dev.\n ID     (Intercept) 0.14     0.3742  \nNumber of obs: 180, groups:  ID, 10\n\nFixed effects:\n                            Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)                  0.79468    0.30687   2.590  0.00961 **\nRelation_typeNonConstituent  0.08048    0.40084   0.201  0.84086   \nRelation_typeUnrelated      -0.30295    0.38990  -0.777  0.43716   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) Rlt_NC\nRltn_typNnC -0.643       \nRltn_typUnr -0.665  0.506"
+  },
+  {
     "objectID": "slides/index.html#run-power-analysis-1",
     "href": "slides/index.html#run-power-analysis-1",
     "title": "proPower: Prospective power analyses for frequentist regression models",
     "section": "Run power analysis",
-    "text": "Run power analysis\n\nsha_lm_ext &lt;- extend(sha_lm, along = \"ID\", n = 300)\nfixef(sha_lm_ext)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nsha_lm_pow &lt;- powerCurve(sha_lm_ext, fixed(\"Relation_typeNonConstituent\"), along = \"ID\")\nprint(sha_lm_pow)\n\n\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval),\nby largest value of ID:\n    100:  4.80% ( 3.56,  6.31) - 54 rows\n    130: 12.10% (10.14, 14.28) - 648 rows\n    160: 21.30% (18.80, 23.97) - 1242 rows\n    190: 24.80% (22.15, 27.60) - 1836 rows\n     22: 30.80% (27.95, 33.76) - 2430 rows\n     25: 37.30% (34.29, 40.38) - 3024 rows\n     28: 40.20% (37.14, 43.31) - 3618 rows\n     39: 44.80% (41.69, 47.94) - 4212 rows\n     69: 50.40% (47.25, 53.54) - 4806 rows\n     99: 53.30% (50.15, 56.43) - 5400 rows\n\nTime elapsed: 6 h 7 m 11 s"
+    "text": "Run power analysis\n\nsha_lm_ext &lt;- extend(sha_lm_2), along = \"ID\", n = 1000)\nfixef(sha_lm_ext)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nsha_lm_pow &lt;- powerCurve(sha_lm_ext, fixed(\"Relation_typeNonConstituent\"), along = \"ID\")\nprint(sha_lm_pow)\n\n\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval),\nby largest value of ID:\n      3:  5.00% ( 3.73,  6.54) - 54 rows\n    114: 37.50% (34.49, 40.58) - 2052 rows\n    225: 67.60% (64.60, 70.50) - 4050 rows\n    335: 83.30% (80.84, 85.56) - 6030 rows\n    446: 92.40% (90.58, 93.97) - 8028 rows\n    557: 95.70% (94.25, 96.87) - 10026 rows\n    668: 98.30% (97.29, 99.01) - 12024 rows\n    778: 99.20% (98.43, 99.65) - 14004 rows\n    889: 99.70% (99.13, 99.94) - 16002 rows\n   1000: 100.0% (99.63, 100.0) - 18000 rows\n\nTime elapsed: 1 h 29 m 48 s"
   },
   {
-    "objectID": "slides/index.html#try-with-1000-participants",
-    "href": "slides/index.html#try-with-1000-participants",
+    "objectID": "slides/index.html#power-curve-plot-1",
+    "href": "slides/index.html#power-curve-plot-1",
     "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Try with 1000 participants",
-    "text": "Try with 1000 participants\n\nsha_lm_ext_2 &lt;- extend(sha_lm, along = \"ID\", n = 1000)\nfixef(sha_lm_ext_2)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nsha_lm_pow_2 &lt;- powerSim(sha_lm_ext_2, fixed(\"Relation_typeNonConstituent\"))\n\n\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval):\n      97.00% (95.74, 97.97)\n\nTest: z-test\n      Effect size for Relation_typeNonConstituent is -0.20\n\nBased on 1000 simulations, (768 warnings, 0 errors)\nalpha = 0.05, nrow = 18000\n\nTime elapsed: 4 h 31 m 3 s"
+    "section": "Power curve plot",
+    "text": "Power curve plot\n\nplot(sha_lm_pow)"
+  },
+  {
+    "objectID": "slides/index.html#summary",
+    "href": "slides/index.html#summary",
+    "title": "proPower: Prospective power analyses for frequentist regression models",
+    "section": "Summary",
+    "text": "Summary\n\n\nDetermine Smallest Meaningful Effect Size (SMES).\nRun regression model on pilot or simulated data.\nExtend model with simr::extend() and set coefficient to SMES.\nRun power calculation with simr::powerCurve().\n\n\n\n\nQuestions?"
   },
   {
     "objectID": "slides/index.html#references",
@@ -151,7 +179,7 @@
     "href": "code/02-accuracy.html",
     "title": "02-shallow",
     "section": "",
-    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(ggeffects)\nlibrary(simr)\n\nLoading required package: lme4\nLoading required package: Matrix\n\nAttaching package: 'Matrix'\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\n\nAttaching package: 'simr'\n\nThe following object is masked from 'package:lme4':\n\n    getData\n\nThe following object is masked from 'package:stringr':\n\n    fixed\n\n\n\nshallow &lt;- read_csv(\"data/song2020/shallow.csv\")\n\nRows: 6500 Columns: 11\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (8): Group, ID, List, Target, Critical_Filler, Word_Nonword, Relation_ty...\ndbl (3): ACC, RT, logRT\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nshallow_l2 &lt;- shallow |&gt; \n  filter(Group == \"L2\", Branching == \"Left\")\n\nset.seed(9823)\nshallow_s &lt;- shallow_l2 |&gt; \n  distinct(ID) |&gt; \n  slice_sample(n = 10) |&gt; \n  inner_join(shallow_l2, by = \"ID\") |&gt; \n  filter(Branching == \"Left\") |&gt; \n  droplevels()\n\nsaveRDS(shallow_s, \"data/shallow_s.rds\")\nunique(shallow_s$ID)\n\n [1] \"L2_36\" \"L2_18\" \"L2_35\" \"L2_24\" \"L2_03\" \"L2_11\" \"L2_37\" \"L2_10\" \"L2_30\"\n[10] \"L2_26\"\n\n\n\nsha_lm &lt;- glmer(\n  ACC ~ Relation_type + (Relation_type | ID),\n  family = binomial,\n  data = shallow_l2\n)\n\nsummary(sha_lm)\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: ACC ~ Relation_type + (Relation_type | ID)\n   Data: shallow_l2\n\n     AIC      BIC   logLik deviance df.resid \n   736.5    776.8   -359.3    718.5      639 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-2.7847 -0.9242  0.4295  0.6211  1.3398 \n\nRandom effects:\n Groups Name                        Variance Std.Dev. Corr       \n ID     (Intercept)                 0.79532  0.8918              \n        Relation_typeNonConstituent 0.03407  0.1846    1.00      \n        Relation_typeUnrelated      0.14092  0.3754   -1.00 -1.00\nNumber of obs: 648, groups:  ID, 36\n\nFixed effects:\n                            Estimate Std. Error z value Pr(&gt;|z|)    \n(Intercept)                  1.42605    0.24311   5.866 4.47e-09 ***\nRelation_typeNonConstituent -0.09972    0.27212  -0.366  0.71403    \nRelation_typeUnrelated      -0.68990    0.25174  -2.740  0.00613 ** \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) Rlt_NC\nRltn_typNnC -0.479       \nRltn_typUnr -0.756  0.501\n\n\n\nsha_lm_ext &lt;- extend(sha_lm, along = \"ID\", n = 300)\nfixef(sha_lm_ext)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nfi &lt;- \"cache/sha_lm_pow.rds\"\n\nif (file.exists(fi)) {\n  sha_lm_pow &lt;- readRDS(fi)\n} else {\n  suppressMessages(\n    sha_lm_pow &lt;- powerCurve(sha_lm_ext, fixed(\"Relation_typeNonConstituent\"), along = \"ID\")\n  )\n  saveRDS(sha_lm_pow, fi)\n}\n\n\nprint(sha_lm_pow)\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval),\nby largest value of ID:\n    100:  4.80% ( 3.56,  6.31) - 54 rows\n    130: 12.10% (10.14, 14.28) - 648 rows\n    160: 21.30% (18.80, 23.97) - 1242 rows\n    190: 24.80% (22.15, 27.60) - 1836 rows\n     22: 30.80% (27.95, 33.76) - 2430 rows\n     25: 37.30% (34.29, 40.38) - 3024 rows\n     28: 40.20% (37.14, 43.31) - 3618 rows\n     39: 44.80% (41.69, 47.94) - 4212 rows\n     69: 50.40% (47.25, 53.54) - 4806 rows\n     99: 53.30% (50.15, 56.43) - 5400 rows\n\nTime elapsed: 6 h 7 m 11 s\n\n\n\nsha_lm_ext_2 &lt;- extend(sha_lm, along = \"ID\", n = 1000)\nfixef(sha_lm_ext_2)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nfi &lt;- \"cache/sha_lm_pow_2.rds\"\n\nif (file.exists(fi)) {\n  sha_lm_pow_2 &lt;- readRDS(fi)\n} else {\n  suppressMessages(\n    sha_lm_pow_2 &lt;- powerSim(sha_lm_ext_2, fixed(\"Relation_typeNonConstituent\"))\n  )\n  saveRDS(sha_lm_pow_2, fi)\n}\n\n\nprint(sha_lm_pow_2)\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval):\n      97.00% (95.74, 97.97)\n\nTest: z-test\n      Effect size for Relation_typeNonConstituent is -0.20\n\nBased on 1000 simulations, (768 warnings, 0 errors)\nalpha = 0.05, nrow = 18000\n\nTime elapsed: 4 h 31 m 3 s"
+    "text": "library(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.1     ✔ tibble    3.2.1\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.0.2     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(ggeffects)\nlibrary(simr)\n\nLoading required package: lme4\nLoading required package: Matrix\n\nAttaching package: 'Matrix'\n\nThe following objects are masked from 'package:tidyr':\n\n    expand, pack, unpack\n\n\nAttaching package: 'simr'\n\nThe following object is masked from 'package:lme4':\n\n    getData\n\nThe following object is masked from 'package:stringr':\n\n    fixed\n\n\n\nshallow &lt;- read_csv(\"data/song2020/shallow.csv\")\n\nRows: 6500 Columns: 11\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr (8): Group, ID, List, Target, Critical_Filler, Word_Nonword, Relation_ty...\ndbl (3): ACC, RT, logRT\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nshallow_l2 &lt;- shallow |&gt; \n  filter(Group == \"L2\", Branching == \"Left\")\n\nset.seed(9823)\nshallow_s &lt;- shallow_l2 |&gt; \n  distinct(ID) |&gt; \n  slice_sample(n = 10) |&gt; \n  inner_join(shallow_l2, by = \"ID\") |&gt; \n  filter(Branching == \"Left\") |&gt; \n  droplevels()\n\nsaveRDS(shallow_s, \"data/shallow_s.rds\")\nunique(shallow_s$ID)\n\n [1] \"L2_36\" \"L2_18\" \"L2_35\" \"L2_24\" \"L2_03\" \"L2_11\" \"L2_37\" \"L2_10\" \"L2_30\"\n[10] \"L2_26\"\n\n\n\nsha_lm &lt;- glmer(\n  ACC ~ Relation_type + (Relation_type | ID),\n  family = binomial,\n  data = shallow_s\n)\n\nWarning in checkConv(attr(opt, \"derivs\"), opt$par, ctrl = control$checkConv, :\nModel failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)\n\nsummary(sha_lm)\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: ACC ~ Relation_type + (Relation_type | ID)\n   Data: shallow_s\n\n     AIC      BIC   logLik deviance df.resid \n   243.9    272.7   -113.0    225.9      171 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-1.8220 -1.1732  0.5994  0.7376  0.9667 \n\nRandom effects:\n Groups Name                        Variance Std.Dev. Corr       \n ID     (Intercept)                 0.5606   0.7487              \n        Relation_typeNonConstituent 0.1617   0.4022   -1.00      \n        Relation_typeUnrelated      0.2396   0.4895   -1.00  1.00\nNumber of obs: 180, groups:  ID, 10\n\nFixed effects:\n                              Estimate Std. Error z value Pr(&gt;|z|)  \n(Intercept)                  0.8699404  0.3904283   2.228   0.0259 *\nRelation_typeNonConstituent  0.0008542  0.4401554   0.002   0.9985  \nRelation_typeUnrelated      -0.3867280  0.4379963  -0.883   0.3773  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) Rlt_NC\nRltn_typNnC -0.730       \nRltn_typUnr -0.777  0.596\noptimizer (Nelder_Mead) convergence code: 0 (OK)\nModel failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)\n\n\n\nsha_lm_2 &lt;- glmer(\n  ACC ~ Relation_type + (1 | ID),\n  family = binomial,\n  data = shallow_s\n)\n\nsummary(sha_lm_2)\n\nGeneralized linear mixed model fit by maximum likelihood (Laplace\n  Approximation) [glmerMod]\n Family: binomial  ( logit )\nFormula: ACC ~ Relation_type + (1 | ID)\n   Data: shallow_s\n\n     AIC      BIC   logLik deviance df.resid \n   235.1    247.8   -113.5    227.1      176 \n\nScaled residuals: \n    Min      1Q  Median      3Q     Max \n-1.7702 -1.2415  0.6161  0.7087  0.9373 \n\nRandom effects:\n Groups Name        Variance Std.Dev.\n ID     (Intercept) 0.14     0.3742  \nNumber of obs: 180, groups:  ID, 10\n\nFixed effects:\n                            Estimate Std. Error z value Pr(&gt;|z|)   \n(Intercept)                  0.79468    0.30687   2.590  0.00961 **\nRelation_typeNonConstituent  0.08048    0.40084   0.201  0.84086   \nRelation_typeUnrelated      -0.30295    0.38990  -0.777  0.43716   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nCorrelation of Fixed Effects:\n            (Intr) Rlt_NC\nRltn_typNnC -0.643       \nRltn_typUnr -0.665  0.506\n\n\n\nsha_lm_ext &lt;- extend(sha_lm_2, along = \"ID\", n = 1000)\nfixef(sha_lm_ext)[\"Relation_typeNonConstituent\"] &lt;- -0.2\n\nfi &lt;- \"cache/sha_lm_pow.rds\"\n\nif (file.exists(fi)) {\n  sha_lm_pow &lt;- readRDS(fi)\n} else {\n  suppressMessages(\n    sha_lm_pow &lt;- powerCurve(sha_lm_ext, fixed(\"Relation_typeNonConstituent\"), along = \"ID\")\n  )\n  # The following is needed in this case probably because of a bug in powerCurve()\n  sha_lm_pow[[\"xval\"]] &lt;- sha_lm_pow[[\"nlevels\"]]\n  saveRDS(sha_lm_pow, fi)\n}\n\n\nprint(sha_lm_pow)\n\nPower for predictor 'Relation_typeNonConstituent', (95% confidence interval),\nby largest value of ID:\n      3:  5.00% ( 3.73,  6.54) - 54 rows\n    114: 37.50% (34.49, 40.58) - 2052 rows\n    225: 67.60% (64.60, 70.50) - 4050 rows\n    335: 83.30% (80.84, 85.56) - 6030 rows\n    446: 92.40% (90.58, 93.97) - 8028 rows\n    557: 95.70% (94.25, 96.87) - 10026 rows\n    668: 98.30% (97.29, 99.01) - 12024 rows\n    778: 99.20% (98.43, 99.65) - 14004 rows\n    889: 99.70% (99.13, 99.94) - 16002 rows\n   1000: 100.0% (99.63, 100.0) - 18000 rows\n\nTime elapsed: 1 h 29 m 48 s\n\n\n\nplot(sha_lm_pow)"
   },
   {
     "objectID": "code/01-vowel-duration.html",
@@ -165,7 +193,7 @@
     "href": "index.html",
     "title": "proPower",
     "section": "",
-    "text": "This is the website of the workshop Prospective power analyses for frequentist regression models."
+    "text": "This is the website of the workshop Prospective power analyses for frequentist regression models, part of the STeW series (Statistical Training Workshops) of the Linguistics and English Language department of the University of Edinburgh.\nThe slides are linked in the main menu and you can find data and code in the GitHub repository: https://github.com/stefanocoretta/proPower.\n\n\n\n\n\n\n\nLevel\n🟠 Intermediate\n\n\nDescription\nYou will learn how to perform prospective power analyses for regression/linear models fitted with the frequentist lme4 package. Power analyses are a necessary (albeit always neglected) component of frequentist analyses, since they help the researcher determine the required sample size. Much of the replicability crisis we are facing is due to lack of statistical power (aka low sample sizes) in virtually all published studies.\n\n\nPrerequisites\nNeed to be familiar with regression/linear models in R including models with random effects and binomial/Bernoulli (aka logistic) regressions."
   },
   {
     "objectID": "about.html",
@@ -173,26 +201,5 @@
     "title": "About",
     "section": "",
     "text": "About this site"
-  },
-  {
-    "objectID": "slides/index.html#frequentist-regression-models-and-power",
-    "href": "slides/index.html#frequentist-regression-models-and-power",
-    "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Frequentist regression models and power",
-    "text": "Frequentist regression models and power\n\n\nP-values: \\(P(d|H)\\), probability of the difference \\(d\\) (or a more extreme one) given the hypothesis \\(H\\).\nNeyman-Pearson NHST:\n\n\\(H\\) is the “null hypothesis”, to be rejected.\n\\(\\alpha\\) level: \\(p \\ge \\alpha\\) non-significant difference, \\(p &lt; \\alpha\\) significant difference.\n\\(\\beta\\) level: probability of detecting a significant difference when there is one.\n\nNull Ritual (Gigerenzer 2004, 2018; Gigerenzer, Krauss, and Vitouch 2004):\n\n\\(H\\) is a “nil hypothesis”: \\(d = 0\\), to be rejected.\n\\(\\alpha = 0.05\\)\n\\(\\beta = 0.08\\)"
-  },
-  {
-    "objectID": "slides/index.html#frequentist-statistics",
-    "href": "slides/index.html#frequentist-statistics",
-    "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Frequentist statistics",
-    "text": "Frequentist statistics\n\n\nP-values: \\(P(d|H)\\), probability of the difference \\(d\\) (or a more extreme one) given the hypothesis \\(H\\).\nNeyman-Pearson NHST:\n\n\\(H\\) is the “null hypothesis”, to be rejected.\n\\(\\alpha\\) level: \\(p \\ge \\alpha\\) non-significant difference, \\(p &lt; \\alpha\\) significant difference.\n\\(\\beta\\) level: statistical power, probability of detecting a significant difference when there is one.\n\nNull Ritual (Gigerenzer 2004, 2018; Gigerenzer, Krauss, and Vitouch 2004):\n\n\\(H\\) is a “nil hypothesis”: \\(d = 0\\), to be rejected.\n\\(\\alpha = 0.05\\)\n\\(\\beta = 0.8\\)"
-  },
-  {
-    "objectID": "slides/index.html#statistical-power",
-    "href": "slides/index.html#statistical-power",
-    "title": "proPower: Prospective power analyses for frequentist regression models",
-    "section": "Statistical power",
-    "text": "Statistical power\n\n\nStatistical power (\\(\\beta\\) level) is affected by sample size.\nOne must determine the sample size needed to achieve the desired statistical power. In Null Ritualistic statistics this is 0.8 (or 80% power).\nProspective power analysis.\n\n\n\n\nTwo examples\n\nEffect of consonant voicing on vowel duration in mono- vs disyllabic words.\nAccuracy in a lexical decision task to investigate shallow morphological representation in L2 speakers."
   }
 ]

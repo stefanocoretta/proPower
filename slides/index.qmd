@@ -12,8 +12,18 @@ filters:
   - tachyonsextra
 execute: 
   echo: false
+  fig-align: center
 bibliography: references.bib
 ---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+theme_set(theme_light())
+library(simr)
+```
 
 ## Frequentist statistics
 
@@ -78,14 +88,6 @@ Two examples
 ## Example 1: the data
 
 ```{r}
-#| label: setup
-#| include: false
-
-library(tidyverse)
-library(simr)
-```
-
-```{r}
 #| label: eng-s
 #| echo: true
 
@@ -130,13 +132,16 @@ eng_s |>
 
 -   @nowak2006 finds an effect of voicing of 4.5 ms.
 
--   Let's set the SMES to 5 ms.
+-   Let's use an SMES of 5 ms. What does this correspond to as a difference ratio?
 :::
 
 ## Smallest Meaningful Effect Size (ratios)
 
 ```{r}
 #| label: smes
+#| echo: true
+#| output-location: column
+#| fig-width: 4
 
 x <- seq(50, 300, by = 10)
 y <- x + 5
@@ -145,7 +150,8 @@ ggplot() +
   aes(x, y/x) +
   geom_point(size = 2) +
   labs(
-    x = "Vowel duration", y = "Difference ratio"
+    x = "Vowel duration",
+    y = "Difference ratio"
   )
 
 ```
@@ -162,6 +168,8 @@ dur_lm <- lmer(
     (voicing | speaker),
   data = eng_s
 )
+
+summary(dur_lm)
 ```
 
 ## Extend model and set SMES
@@ -173,6 +181,7 @@ dur_lm <- lmer(
 dur_lm_ext <- extend(dur_lm, along = "speaker", n = 20)
 
 fixef(dur_lm_ext)["voicingvoiced:num_sylmono"] <- 0.03
+fixef(dur_lm_ext)
 ```
 
 ## Run power analysis
@@ -207,6 +216,9 @@ print(dur_lm_pow)
 
 ```{r}
 #| label: power-curve
+#| echo: true
+#| fig-width: 5
+#| fig-align: center
 
 plot(dur_lm_pow)
 
@@ -250,7 +262,7 @@ shallow_s |>
   geom_bar(position = "fill")
 ```
 
-## Smallest Meaningful Effect Size
+## Smallest Meaningful Effect Size (log-odds)
 
 ::: box-note
 -   I have no idea...
@@ -258,19 +270,19 @@ shallow_s |>
 -   Say -0.2 (log-odds).
 :::
 
-## Smallest Meaningfull Effect Size
+## Smallest Meaningful Effect Size (probability)
 
 ```{r}
 #| label: prob-diff
 x <- seq(-3, 3, by = 0.1)
 a <- plogis(x)
 b <- plogis(x - 0.2)
-ab <- b - a
+ab <- (b - a) * 100
 
 ggplot() +
   aes(plogis(x), ab) +
   geom_point() +
-  labs(x = "Baseline probability", y = "Probability difference")
+  labs(x = "Baseline probability", y = "Probability difference (percentage points)")
 ```
 
 ## Run regression model
@@ -288,6 +300,21 @@ sha_lm <- glmer(
 summary(sha_lm)
 ```
 
+## Run regression model II
+
+```{r}
+#| label: sha-lm-2
+#| echo: true
+
+sha_lm_2 <- glmer(
+  ACC ~ Relation_type + (1 | ID),
+  family = binomial,
+  data = shallow_s
+)
+
+summary(sha_lm_2)
+```
+
 ## Run power analysis
 
 ```{r}
@@ -295,7 +322,7 @@ summary(sha_lm)
 #| eval: false
 #| echo: true
 
-sha_lm_ext <- extend(sha_lm, along = "ID", n = 300)
+sha_lm_ext <- extend(sha_lm_2), along = "ID", n = 1000)
 fixef(sha_lm_ext)["Relation_typeNonConstituent"] <- -0.2
 
 sha_lm_pow <- powerCurve(sha_lm_ext, fixed("Relation_typeNonConstituent"), along = "ID")
@@ -310,26 +337,31 @@ sha_lm_pow <- readRDS("cache/sha_lm_pow.rds")
 print(sha_lm_pow)
 ```
 
-## Try with 1000 participants
+## Power curve plot
 
 ```{r}
-#| label: sha-pow-2-code
-#| eval: false
+#| label: sha-pow-curve
 #| echo: true
-
-sha_lm_ext_2 <- extend(sha_lm, along = "ID", n = 1000)
-fixef(sha_lm_ext_2)["Relation_typeNonConstituent"] <- -0.2
-
-sha_lm_pow_2 <- powerSim(sha_lm_ext_2, fixed("Relation_typeNonConstituent"))
+plot(sha_lm_pow)
 ```
 
-```{r}
-#| label: sha-pow-2
-#| echo: false
+## Summary
 
-sha_lm_pow_2 <- readRDS("cache/sha_lm_pow_2.rds")
-print(sha_lm_pow_2)
-```
+::: box-note
+1.  Determine Smallest Meaningful Effect Size (SMES).
+
+2.  Run regression model on pilot or simulated data.
+
+3.  Extend model with `simr::extend()` and set coefficient to SMES.
+
+4.  Run power calculation with `simr::powerCurve()`.
+:::
+
+. . .
+
+::: box-tip
+**Questions?**
+:::
 
 ## References
 
