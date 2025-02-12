@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Stefano Coretta">
+<meta name="author" content="Stefano">
 
-<title>02-shallow – proPower</title>
+<title>Prepare data – proPower</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,7 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d1b12f2568ecbe55642fee6aa00bd082.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -151,7 +151,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">02-shallow</h1>
+<h1 class="title">Prepare data</h1>
 </div>
 
 
@@ -161,7 +161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Stefano Coretta </p>
+             <p>Stefano </p>
           </div>
   </div>
     
@@ -211,168 +211,152 @@ The following object is masked from 'package:stringr':
 
     fixed</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coretta2019eng)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"eng_durations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>shallow <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/song2020/shallow.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 6500 Columns: 11
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (8): Group, ID, List, Target, Critical_Filler, Word_Nonword, Relation_ty...
-dbl (3): ACC, RT, logRT
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>shallow_l2 <span class="ot">&lt;-</span> shallow <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Group <span class="sc">==</span> <span class="st">"L2"</span>, Branching <span class="sc">==</span> <span class="st">"Left"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9823</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>shallow_s <span class="ot">&lt;-</span> shallow_l2 <span class="sc">|&gt;</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(ID) <span class="sc">|&gt;</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(shallow_l2, <span class="at">by =</span> <span class="st">"ID"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Branching <span class="sc">==</span> <span class="st">"Left"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(shallow_s, <span class="st">"data/shallow_s.rds"</span>)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(shallow_s<span class="sc">$</span>ID)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9872</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>eng_s <span class="ot">&lt;-</span> eng_durations <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(speaker) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">6</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(eng_durations, <span class="at">by =</span> <span class="st">"speaker"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(eng_s<span class="sc">$</span>speaker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "L2_36" "L2_18" "L2_35" "L2_24" "L2_03" "L2_11" "L2_37" "L2_10" "L2_30"
-[10] "L2_26"</code></pre>
+<pre><code>[1] en02 en11 en01 en04 en03 en07
+Levels: en01 en02 en03 en04 en07 en11</code></pre>
 </div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sha_lm <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  ACC <span class="sc">~</span> Relation_type <span class="sc">+</span> (Relation_type <span class="sc">|</span> ID),</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> shallow_s</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv, :
-Model failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sha_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
-  Approximation) [glmerMod]
- Family: binomial  ( logit )
-Formula: ACC ~ Relation_type + (Relation_type | ID)
-   Data: shallow_s
-
-     AIC      BIC   logLik deviance df.resid 
-   243.9    272.7   -113.0    225.9      171 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--1.8220 -1.1732  0.5994  0.7376  0.9667 
-
-Random effects:
- Groups Name                        Variance Std.Dev. Corr       
- ID     (Intercept)                 0.5606   0.7487              
-        Relation_typeNonConstituent 0.1617   0.4022   -1.00      
-        Relation_typeUnrelated      0.2396   0.4895   -1.00  1.00
-Number of obs: 180, groups:  ID, 10
-
-Fixed effects:
-                              Estimate Std. Error z value Pr(&gt;|z|)  
-(Intercept)                  0.8699404  0.3904283   2.228   0.0259 *
-Relation_typeNonConstituent  0.0008542  0.4401554   0.002   0.9985  
-Relation_typeUnrelated      -0.3867280  0.4379963  -0.883   0.3773  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-            (Intr) Rlt_NC
-Rltn_typNnC -0.730       
-Rltn_typUnr -0.777  0.596
-optimizer (Nelder_Mead) convergence code: 0 (OK)
-Model failed to converge with max|grad| = 0.00637234 (tol = 0.002, component 1)</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(eng_s, <span class="st">"data/eng_s.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sha_lm_2 <span class="ot">&lt;-</span> <span class="fu">glmer</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  ACC <span class="sc">~</span> Relation_type <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> ID),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> shallow_s</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sha_lm_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Generalized linear mixed model fit by maximum likelihood (Laplace
-  Approximation) [glmerMod]
- Family: binomial  ( logit )
-Formula: ACC ~ Relation_type + (1 | ID)
-   Data: shallow_s
-
-     AIC      BIC   logLik deviance df.resid 
-   235.1    247.8   -113.5    227.1      176 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--1.7702 -1.2415  0.6161  0.7087  0.9373 
-
-Random effects:
- Groups Name        Variance Std.Dev.
- ID     (Intercept) 0.14     0.3742  
-Number of obs: 180, groups:  ID, 10
-
-Fixed effects:
-                            Estimate Std. Error z value Pr(&gt;|z|)   
-(Intercept)                  0.79468    0.30687   2.590  0.00961 **
-Relation_typeNonConstituent  0.08048    0.40084   0.201  0.84086   
-Relation_typeUnrelated      -0.30295    0.38990  -0.777  0.43716   
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Correlation of Fixed Effects:
-            (Intr) Rlt_NC
-Rltn_typNnC -0.643       
-Rltn_typUnr -0.665  0.506</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sha_lm_ext <span class="ot">&lt;-</span> <span class="fu">extend</span>(sha_lm_2, <span class="at">along =</span> <span class="st">"ID"</span>, <span class="at">n =</span> <span class="dv">1000</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(sha_lm_ext)[<span class="st">"Relation_typeNonConstituent"</span>] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>fi <span class="ot">&lt;-</span> <span class="st">"cache/sha_lm_pow.rds"</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fi)) {</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  sha_lm_pow <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fi)</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    sha_lm_pow <span class="ot">&lt;-</span> <span class="fu">powerCurve</span>(sha_lm_ext, <span class="fu">fixed</span>(<span class="st">"Relation_typeNonConstituent"</span>), <span class="at">along =</span> <span class="st">"ID"</span>)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># The following is needed in this case probably because of a bug in powerCurve()</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  sha_lm_pow[[<span class="st">"xval"</span>]] <span class="ot">&lt;-</span> sha_lm_pow[[<span class="st">"nlevels"</span>]]</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(sha_lm_pow, fi)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sha_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Power for predictor 'Relation_typeNonConstituent', (95% confidence interval),
-by largest value of ID:
-      3:  5.00% ( 3.73,  6.54) - 54 rows
-    114: 37.50% (34.49, 40.58) - 2052 rows
-    225: 67.60% (64.60, 70.50) - 4050 rows
-    335: 83.30% (80.84, 85.56) - 6030 rows
-    446: 92.40% (90.58, 93.97) - 8028 rows
-    557: 95.70% (94.25, 96.87) - 10026 rows
-    668: 98.30% (97.29, 99.01) - 12024 rows
-    778: 99.20% (98.43, 99.65) - 14004 rows
-    889: 99.70% (99.13, 99.94) - 16002 rows
-   1000: 100.0% (99.63, 100.0) - 18000 rows
-
-Time elapsed: 1 h 29 m 48 s</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sha_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>eng_s <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(voicing, v1_duration)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(num_syl))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="02-accuracy_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="01-vowel-duration_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dur_lm <span class="ot">&lt;-</span> <span class="fu">lmer</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">log</span>(v1_duration) <span class="sc">~</span> voicing <span class="sc">+</span> num_syl <span class="sc">+</span> voicing<span class="sc">:</span>num_syl <span class="sc">+</span> speech_rate_c <span class="sc">+</span> (voicing <span class="sc">|</span> speaker),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> eng_s</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dur_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by REML ['lmerMod']
+Formula: 
+log(v1_duration) ~ voicing + num_syl + voicing:num_syl + speech_rate_c +  
+    (voicing | speaker)
+   Data: eng_s
+
+REML criterion at convergence: -230
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3800 -0.5941  0.1648  0.6624  3.1393 
+
+Random effects:
+ Groups   Name          Variance  Std.Dev. Corr
+ speaker  (Intercept)   0.0181967 0.13490      
+          voicingvoiced 0.0004701 0.02168  0.37
+ Residual               0.0397878 0.19947      
+Number of obs: 720, groups:  speaker, 6
+
+Fixed effects:
+                          Estimate Std. Error t value
+(Intercept)                4.66722    0.05705  81.816
+voicingvoiced              0.17276    0.02281   7.573
+num_sylmono                0.08260    0.02308   3.579
+speech_rate_c             -0.22902    0.02985  -7.673
+voicingvoiced:num_sylmono  0.05501    0.02974   1.850
+
+Correlation of Fixed Effects:
+            (Intr) vcngvc nm_syl spch__
+voicingvocd -0.029                     
+num_sylmono -0.163  0.417              
+speech_rt_c  0.011 -0.006  0.412       
+vcngvcd:nm_  0.130 -0.652 -0.647 -0.006</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpredict</span>(dur_lm, <span class="fu">c</span>(<span class="st">"voicing"</span>, <span class="st">"num_syl"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Model has log-transformed response. Back-transforming predictions to
+  original response scale. Standard errors are still on the transformed
+  scale.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Predicted values of v1_duration
+
+num_syl: di
+
+voicing   | Predicted |         95% CI
+--------------------------------------
+voiceless |    110.79 |  99.01, 123.96
+voiced    |    131.68 | 116.82, 148.43
+
+num_syl: mono
+
+voicing   | Predicted |         95% CI
+--------------------------------------
+voiceless |    120.33 | 107.53, 134.64
+voiced    |    151.11 | 134.06, 170.32
+
+Adjusted for:
+* speech_rate_c = -0.18
+*       speaker = 0 (population-level)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dur_lm_ext <span class="ot">&lt;-</span> <span class="fu">extend</span>(dur_lm, <span class="at">along =</span> <span class="st">"speaker"</span>, <span class="at">n =</span> <span class="dv">100</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fixef</span>(dur_lm_ext)[<span class="st">"voicingvoiced:num_sylmono"</span>] <span class="ot">&lt;-</span> <span class="fl">0.03</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>fi <span class="ot">&lt;-</span> <span class="st">"cache/dur_lm_pow.rds"</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fi)) {</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  dur_lm_pow <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fi)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">suppressMessages</span>(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    dur_lm_pow <span class="ot">&lt;-</span> <span class="fu">powerCurve</span>(dur_lm_ext, <span class="fu">fixed</span>(<span class="st">"voicing:num_syl"</span>), <span class="at">along =</span> <span class="st">"speaker"</span>, <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">100</span>)) </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(dur_lm_pow, fi)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dur_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Power for predictor 'voicing:num_syl', (95% confidence interval),
+by number of levels in speaker:
+     50: 83.30% (80.84, 85.56) - 6000 rows
+     70: 92.90% (91.13, 94.41) - 8400 rows
+    100: 98.90% (98.04, 99.45) - 12000 rows
+
+Time elapsed: 1 h 12 m 47 s</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dur_lm_pow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-vowel-duration_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">50</span>, <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">5</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y<span class="sc">/</span>x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01-vowel-duration_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
